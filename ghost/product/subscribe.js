@@ -27,7 +27,10 @@ async function subscribe(db, contractId, uid) {
 
 
 // 公共es 结果集
-async function esResult(uid) {
+async function esResult(db,uid) {
+
+    db.query(`select * from subscribe_subject where `)
+
     let dsl = {
         "track_total_hits": true,
         "size": 0,
