@@ -28,11 +28,13 @@ let run = async function () {
     //实例化redis
     const rds = redis.dowding(args.env)
 
+    const adb = { mdb: db_dowding, rdb: rds }
+
     try {
         //redis所有用户
         let redisUsers = await rds.keys(`dowding:apisix:apiV2:contract:balance:9021894`)
 
-        if(redisUsers.length ==0){
+        if (redisUsers.length == 0) {
             console.log(`redis没用该用户`);
         }
 
@@ -41,7 +43,7 @@ let run = async function () {
             let uid = strS[5];
             let hash = await rds.hgetall(i)
             for (const obj in hash) {
-                
+
                 let balanceInfo = JSON.parse(hash[obj])
                 let hashKey = obj
 
@@ -56,9 +58,9 @@ let run = async function () {
                 let productList = {}       //用户服务账单明细
 
                 await Promise.all([
-                    userApis(db_dowding, balanceInfo.id, uid),           //用户API列表
-                    overview(db_dowding, balanceInfo.id, uid, args.env), //用户服务
-                    subscribe(db_dowding, balanceInfo.id, uid, args.env) //用户专题服务
+                    userApis(db_dowding, balanceInfo.id, uid),              //用户API列表
+                    overview(db_dowding, balanceInfo.id, uid, args.env),    //用户服务
+                    subscribe(adb, balanceInfo.id, uid, hashKey, args.env)  //用户专题服务
                 ]).then((res) => {
                     let subject
                     [userApi, productList, subject] = res
@@ -104,6 +106,7 @@ let run = async function () {
             }
         }
     } catch (error) {
+        console.log(error);
         throw new Error('运行异常' + error)
     } finally {
         process.exit(0);  //运行结束
