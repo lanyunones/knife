@@ -1,4 +1,4 @@
-const { get, filter } = require('lodash');
+const { get, filter,sum } = require('lodash');
 const { Decimal } = require('decimal.js')
 const { subjectClient } = require('../logic/esClient.js')
 
@@ -13,13 +13,13 @@ async function subscribe(db, contractId, uid) {
     if (dataSize == 0 || factor == null) {
         return false
     } else {
-        let esResDataSize = await esResult(uid)  
+        let esResDataSize = await esResult(db,uid)  
         let dataGroup=new Decimal(dataSize).add(esResDataSize).toFixed()
         let totalGroup=new Decimal(dataGroup).mul(factor).toFixed()
-      
         return {
+            onceGroup:dataGroup,
             dataGroup: dataGroup,
-            totalGroup: totalGroup
+            totalGroup: totalGroup,
         }
     }
 }
@@ -29,8 +29,24 @@ async function subscribe(db, contractId, uid) {
 // 公共es 结果集
 async function esResult(db,uid) {
 
-    db.query(`select * from subscribe_subject where `)
+   let subjectId= await db.query(`SELECT account_id,subject_id FROM subscribe_subject WHERE account_id = ${uid} AND ((is_start = 1 AND is_deleted = 1) OR is_system = 0 )`)
+   subjectId=subjectId[0]
 
+    let fun=[]
+
+    for(const item of subjectId){
+        fun.push(esRs(item.subject_id))
+    }
+    let total=0
+    await Promise.all(fun).then((res)=>{
+       total=sum(res)
+    })
+    return total
+}
+
+
+
+async function esRs(subjectId){
     let dsl = {
         "track_total_hits": true,
         "size": 0,
@@ -40,7 +56,7 @@ async function esResult(db,uid) {
                     {
                         "term": {
                             // 数据平台账号ID
-                            "puts_user": uid
+                            "puts": subjectId
                         }
                     }
                 ]
@@ -51,7 +67,6 @@ async function esResult(db,uid) {
     let dataSize = get(res, `["hits"]["total"]["value"]`, 0)
     return dataSize
 }
-
 
 
 module.exports = {

@@ -30,18 +30,16 @@ let run = async function () {
 
     try {
         //redis所有用户
-        let redisUsers = await rds.keys(`dowding:apisix:apiV2:contract:balance:*`)
+        let redisUsers = await rds.keys(`dowding:apisix:apiV2:contract:balance:9021894`)
 
         if(redisUsers.length ==0){
             console.log(`redis没用该用户`);
         }
 
         for (const i of redisUsers) {
-            
             let strS = i.split(':');
             let uid = strS[5];
             let hash = await rds.hgetall(i)
-           
             for (const obj in hash) {
                 
                 let balanceInfo = JSON.parse(hash[obj])
