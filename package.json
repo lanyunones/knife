@@ -1,0 +1,38 @@
+{
+    "name": "crontab-script",
+    "version": "1.0.0",
+    "description": "定时任务脚本 , 用来处理业务",
+    "main": "sync-api-bill-record.js",
+    "scripts": {
+        "ce":"node ./changeEsLog/run.js -env prod",
+        "ghost":"node ./ghost/run.js -env prod",
+        "exLog":"node ./exceptionLog/run.js -env prod",
+        "saveLog": "node ./saveLog/run.js -env prod",
+        "exceptionLog": "node ./exceptionLog/run.js -env prod",
+        "changeR": "node ./changeR/run.js -env prod"
+    },
+    "author": "",
+    "license": "ISC",
+    "dependencies": {
+        "@sentry/node": "^6.15.0",
+        "@sentry/tracing": "^6.15.0",
+        "async-promise-pool": "^1.0.6",
+        "axios": "^0.27.2",
+        "decimal": "0.0.2",
+        "decimal.js": "^10.4.3",
+        "ioredis": "^5.2.5",
+        "json-bigint": "^1.0.0",
+        "kafkajs": "^2.2.4",
+        "lodash": "^4.17.21",
+        "moment": "^2.29.4",
+        "moment-timezone": "^0.5.45",
+        "mysql2": "^2.3.3",
+        "nodemailer": "^6.9.4",
+        "parse-script-args": "^1.0.5",
+        "qs": "^6.11.1"
+    },
+    "devDependencies": {
+        "exceljs": "^4.4.0",
+        "request": "^2.88.2"
+    }
+}
