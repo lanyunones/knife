@@ -4,7 +4,7 @@
     "description": "定时任务脚本 , 用来处理业务",
     "main": "sync-api-bill-record.js",
     "scripts": {
-        "ce":"node ./changeEsLog/run.js -env prod",
+        "check":"node ./check/run.js -env prod",
         "ghost":"node ./ghost/run.js -env prod",
         "exLog":"node ./exceptionLog/run.js -env prod",
         "saveLog": "node ./saveLog/run.js -env prod",

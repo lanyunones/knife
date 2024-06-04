@@ -32,13 +32,13 @@ let run = async function () {
                 "bool": {
                     "filter": [
                         {
-                            "term": {
-                                "uri": "/api/v3/kafka/task"
+                            "terms": {
+                                "uri": ["/api/v3/consult/search","/api/v3/kafka/task"]
                             }
                         },
                         {
                             "term": {
-                                "jwt_dd_aid": 9000620
+                                "jwt_dd_aid": 9020961
                             }
                         },
                         {
@@ -66,6 +66,7 @@ let run = async function () {
             },
             "_source": {
                 "includes": [
+                    "uri",
                     "charge_deduct_text_size",
                     "charge_deduct_video_size",
                     "charge_deduct_size",
@@ -111,7 +112,7 @@ let run = async function () {
                 }
             }
         }
-        let res = await esClient(dsl, '20240528')
+        let res = await esClient(dsl, '20240527')
         let list = res.hits.hits
 
         for (const item of list) {
