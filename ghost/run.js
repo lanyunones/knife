@@ -9,7 +9,7 @@ const { lock, unlock } = require('../common/redisLock');
 const { overview } = require('./product/product.js');
 const { subscribe } = require('./product/subscribe.js');
 const { userRecharge, userApis } = require('./logic/contract.js');
-const { log } = require('console');
+
 
 /**
  * 未知
