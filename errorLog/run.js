@@ -6,7 +6,7 @@ const { esErrorClient, logClient, updateEs } = require('./logic/esClient.js')
 
 
 /**
- * 未知
+ * 处理合同退费异常
  */
 let run = async function () {
 
