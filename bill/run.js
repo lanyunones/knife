@@ -35,7 +35,7 @@ let run = async function () {
 
         let aim = []
         for (const item of data) {
-            if (item["合同编号"] == "SJXD2023082919" && item["账号"] == "13645714696") {
+            if (item["合同编号"] == "SJ2022112518" && item["账号"] == "13601035022") {
                 aim.push(item)
             }
         }
