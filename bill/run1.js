@@ -36,7 +36,7 @@ let run = async function () {
 
         let aim = []
         for (const item of data) {
-            if (item["合同编号"] == "SJXD2023121801" && item["账号"] == "15999588964") {
+            if (item["合同编号"] == "SJ2022101821" && item["账号"] == "13064189504") {
                 aim.push(item)
             }
         }
@@ -46,15 +46,9 @@ let run = async function () {
             return
         }
 
-        let sqldetail = `select practical_unit from contract_bill_detail where bill_id=${aim[0]["账单id"]}`
-        let f = await db.query(sqldetail)
-        f = f[0]
-        f = f[0]?.practical_unit ?? '0.01'
-        f = new Decimal(f).mul('10000000000').toFixed()
-
         let lj = "0"
         for (const item of aim) {
-            console.log(item);
+           
             let sql1 = `select statistic_data->'$.money_cycle' as money_cycle,statistic_data->'$.money_refund' as money_refund  from contract_bill where id=${item["账单id"]}`
             let res = await db.query(sql1)
             res = res[0]
@@ -65,6 +59,7 @@ let run = async function () {
 
             lj = new Decimal(lj).add(money_cycle).toFixed() //累计消耗金额
             let qk = new Decimal(lj).sub(money_refund).toFixed()
+            console.log(`${item["账单id"]},累计消费：${lj},累计冲值：${money_refund} 欠款：${qk}`)
 
             let sql = `
                update 

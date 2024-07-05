@@ -35,7 +35,7 @@ let run = async function () {
 
         let aim = []
         for (const item of data) {
-            if (item["合同编号"] == "XD2023122230" && item["账号"] == "15610015553") {
+            if (item["合同编号"] == "SJXD2023082919" && item["账号"] == "13645714696") {
                 aim.push(item)
             }
         }
@@ -44,13 +44,17 @@ let run = async function () {
             console.log("未查询到有效账单");
             return
         }
-
+       
         let sqldetail = `select practical_unit from contract_bill_detail where bill_id=${aim[0]["账单id"]}`
         let f = await db.query(sqldetail)
         f = f[0]
-        f = f[0]?.practical_unit ?? '0.01'
-        f = new Decimal(f).mul('10000000000').toFixed()
-
+       
+        if(f[0]?.practical_unit == undefined || f[0]?.practical_unit == null || f[0]?.practical_unit == ""){
+            f = new Decimal('0.01').mul('10000000000').toFixed()
+        }else{
+            f = new Decimal(f[0]?.practical_unit).mul('10000000000').toFixed()
+        }
+   
         let lj = "0"
         for (const item of aim) {
             console.log(item);
@@ -62,7 +66,7 @@ let run = async function () {
             update 
                 contract_bill 
             set 
-                statistic_data=JSON_SET(statistic_data,'$.money_cycle','${money_cycle}'),statistic_data=JSON_SET(statistic_data,'$.money_sum','${lj}'),statistic_data=JSON_SET(statistic_data,'$.money_debt','${qk}')
+                statistic_data=JSON_SET(statistic_data,'$.money_cycle','${money_cycle}'),statistic_data=JSON_SET(statistic_data,'$.money_sum','${lj}')
             where 
                 id=${item["账单id"]}
             `
