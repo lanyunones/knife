@@ -5,7 +5,7 @@ const execArgs = require('parse-script-args')
 const moment = require('moment');
 const { Decimal } = require('decimal.js')
 const XLSX = require('xlsx');
-
+const time = require('../common/time');
 
 /**
  * 未知
@@ -23,21 +23,61 @@ let run = async function () {
     db = db.promise()
 
     try {
-       //1,003,257
-        let arr=[
-            {id:2910,v:127121},
-            {id:3055,v:77018},
-            {id:3204,v:67402},
-            {id:3344,v:100777},
-        ]
+        let times = time.betweenDates('2023-01-01', '2023-04-21', 'YYYYMMDD')
+
+        let dir = `${__dirname}/../bill.xlsx`
+        const workbook = XLSX.readFile(dir);
+        const sheetNames = workbook.SheetNames;
+        const sheet = workbook.Sheets[sheetNames[0]];
+        const data = XLSX.utils.sheet_to_json(sheet);
+        let sum = data.length
+
+        let i = 0
+
+        let aim = []
+        for (const item of data) {
+            if (item["合同编号"] == "SJXD2023121801" && item["账号"] == "15999588964") {
+                aim.push(item)
+            }
+        }
+
+        if (aim.length == 0) {
+            console.log("未查询到有效账单");
+            return
+        }
+
+        let sqldetail = `select practical_unit from contract_bill_detail where bill_id=${aim[0]["账单id"]}`
+        let f = await db.query(sqldetail)
+        f = f[0]
+        f = f[0]?.practical_unit ?? '0.01'
+        f = new Decimal(f).mul('10000000000').toFixed()
+
+        let lj = "0"
+        for (const item of aim) {
+            console.log(item);
+            let sql1 = `select statistic_data->'$.money_cycle' as money_cycle,statistic_data->'$.money_refund' as money_refund  from contract_bill where id=${item["账单id"]}`
+            let res = await db.query(sql1)
+            res = res[0]
+
+            let money_cycle = res[0].money_cycle ?? "0"
+            let money_refund = res[0]?.money_refund ?? "0"
 
 
+            lj = new Decimal(lj).add(money_cycle).toFixed() //累计消耗金额
+            let qk = new Decimal(lj).sub(money_refund).toFixed()
 
-        for(const item of arr){
-            let giftsAmount=new Decimal(item.v).mul('10000000000').mul()
-            let sql = `update bill_detail set statistic_data=JSON_SET(statistic_data,'$.officialPrice','${officialPrice}') where id=${item.id}`
+            let sql = `
+               update 
+                   contract_bill 
+               set 
+                   statistic_data=JSON_SET(statistic_data,'$.money_sum','${lj}'),statistic_data=JSON_SET(statistic_data,'$.money_debt','${qk}')
+               where 
+                   id=${item["账单id"]}
+               `
             await db.query(sql)
         }
+
+
 
 
 
