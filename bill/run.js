@@ -32,20 +32,6 @@ let run = async function () {
         let sum = data.length
 
 
-
-        // let aim = []
-        // for (const item of data) {
-        //     if (item["合同编号"] == "SJ2022112518" && item["账号"] == "13601035022") {
-        //         aim.push(item)
-        //     }
-        // }
-
-        // if (aim.length == 0) {
-        //     console.log("未查询到有效账单");
-        //     return
-        // }
-
-
         let i = 0
         for (const item of data) {
             i++
@@ -63,18 +49,6 @@ let run = async function () {
             let res = await db.query(sql1)
             res = res[0]
             let money_refund = res[0]?.money_refund ?? "0"
-            //let money_cycle = new Decimal(item["周期消耗量"]).mul(f).toFixed() //周期消耗金额
-            // lj = new Decimal(lj).add(money_cycle).toFixed() //累计消耗金额
-            // let qk = new Decimal(lj).sub(item["已还款金额"]).toFixed()
-
-            // let sql = `
-            // update 
-            //     contract_bill 
-            // set 
-            //     statistic_data=JSON_SET(statistic_data,'$.money_cycle','${money_cycle}'),statistic_data=JSON_SET(statistic_data,'$.money_sum','${lj}')
-            // where 
-            //     id=${item["账单id"]}
-            // `
 
             let sql = `insert into ly_bill 
                 (id,contract_id,phone,cname,year,month,month_num,factor,money_refund)
