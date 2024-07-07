@@ -5,8 +5,8 @@
     "main": "sync-api-bill-record.js",
     "scripts": {
         "aaa": "node ./bill/run.js -env prod",
-        "bbb": "node ./bill/run2.js -env prod",
-        "bc": "node ./bill/run3.js -env prod",
+        "bbb": "node ./bill/runAll.js -env prod",
+        "bc": "node ./bill/update.js -env prod",
         "aidsid": "node ./aidsid/run.js -env prod",
         "errorLog": "node ./errorLog/run.js",
         "check": "node ./check/run.js -env prod",
