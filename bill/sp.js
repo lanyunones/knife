@@ -24,59 +24,27 @@ let run = async function () {
 
     try {
 
-        let ids = [
-            3490,
-            3500,
-            3528,
-            3439,
-            3492,
-            3456,
-            3442,
-            3467,
-            3493,
-            3506,
-            3487,
-            3525]
-
-        let sql = `select order_detail_id,account_id from contract_bill where id in (${ids.join(',')}) group by order_detail_id,account_id`
+        let sql = `select order_detail_id,account_id from bill_supplement group by order_detail_id,account_id`
         let bill = await db.query(sql)
         bill = bill[0]
 
+        //bill = [{ order_detail_id: '0570684d729d2ab1', account_id: 9001192 }]
 
         for (const item of bill) {
-            let sql = `select id,statistic_data->'$.money_cycle' as money_cycle,statistic_data->'$.money_refund' as money_refund  from contract_bill where bill_type="月度" and is_deleted=0 and account_id='${item.account_id}' and order_detail_id='${item.order_detail_id}' order by id,statistical_year,statistical_month asc`
+            let sql = `select id,account_id,order_detail_id,statistic_data->'$.money_sum' as money_sum  from contract_bill where bill_type="月度" and is_deleted=0 and account_id=${item.account_id} and order_detail_id='${item.order_detail_id}' order by id,statistical_year,statistical_month asc`
             let list = await db.query(sql)
             list = list[0]
-            let lj = '0'
+
             for (const l of list) {
-
-                if (l.money_cycle == null || l.money_cycle == "") {
-                    continue;
-                }
-
-                // 当月消费数据量
-                let money_cycle
-                if (l.money_cycle == null || l.money_cycle == "") {
-                    money_cycle = '0'
-                } else {
-                    money_cycle = l.money_cycle
-                }
-
-                let money_refund
-
-                if (l.money_refund == null || l.money_refund == "") {
-                    money_refund = '0'
-                } else {
-                    money_refund = l.money_refund
-                }
-
-                lj = new Decimal(lj).add(money_cycle).toFixed()
-                let qk = new Decimal(lj).sub(money_refund).toFixed()
+                if (l.money_sum == null) { continue }
+                let sqlC = `select IFNULL(sum(balance),0) as balance from bill_supplement where order_detail_id='${l.order_detail_id}' and account_id=${l.account_id} and bid <=${l.id}`
+                let balance = await db.query(sqlC)
+                balance=new Decimal(balance[0][0].balance).toFixed()
+                let qk = new Decimal(l.money_sum).sub(balance).toFixed()
                 let sql1 = `
                     update contract_bill set 
-                        statistic_data=JSON_SET(statistic_data,'$.money_sum','${lj}'),
-                        statistic_data=JSON_SET(statistic_data,'$.money_debt','${qk}'),
-                        statistic_data=JSON_SET(statistic_data,'$.money_refund','${money_refund}')
+                        statistic_data=JSON_SET(statistic_data,'$.money_refund','${balance}'),
+                        statistic_data=JSON_SET(statistic_data,'$.money_debt','${qk}')
                     where 
                         id=${l.id}`
 
