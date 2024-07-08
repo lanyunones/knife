@@ -30,7 +30,8 @@ let run = async function () {
         const sheet = workbook.Sheets[sheetNames[0]];
         const data = XLSX.utils.sheet_to_json(sheet);
         let sum = data.length
-
+        console.log(sum);
+        return
 
         let i = 0
         for (const item of data) {
@@ -45,15 +46,16 @@ let run = async function () {
                 f = new Decimal(f[0]?.practical_unit).mul('10000000000').toFixed()
             }
 
-            let sql1 = `select statistic_data->'$.money_cycle' as money_cycle,statistic_data->'$.money_refund' as money_refund  from contract_bill where id=${item["账单id"]}`
+            let sql1 = `select statistic_data->'$.money_cycle' as money_cycle,statistic_data->'$.money_refund' as money_refund,statistic_data->'$.cycle_consumption' as cycle_consumption  from contract_bill where id=${item["账单id"]}`
             let res = await db.query(sql1)
             res = res[0]
             let money_refund = res[0]?.money_refund ?? "0"
+            let cycle_consumption = res[0]?.cycle_consumption ?? 0
 
             let sql = `insert into ly_bill 
                 (id,contract_id,phone,cname,year,month,month_num,factor,money_refund)
                 values
-                (${item["账单id"]},'${item["合同编号"]}','${item["账号"]}','${item["客户名称"]}',${item["年"]},${item["月"]},${item["周期消耗量"]},'${f}','${money_refund}')
+                (${item["账单id"]},'${item["合同编号"]}','${item["账号"]}','${item["客户名称"]}',${item["年"]},${item["月"]},${cycle_consumption},'${f}','${money_refund}')
             `
             await db.query(sql)
 
