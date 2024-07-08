@@ -24,14 +24,13 @@ let run = async function () {
     db = db.promise()
 
     try {
-        let dir = `${__dirname}/../bill.xlsx`
+        let dir = `${__dirname}/../bill2.xlsx`
         const workbook = XLSX.readFile(dir);
         const sheetNames = workbook.SheetNames;
         const sheet = workbook.Sheets[sheetNames[0]];
         const data = XLSX.utils.sheet_to_json(sheet);
         let sum = data.length
-        console.log(sum);
-        return
+
 
         let i = 0
         for (const item of data) {
