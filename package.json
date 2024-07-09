@@ -4,7 +4,7 @@
     "description": "定时任务脚本 , 用来处理业务",
     "main": "sync-api-bill-record.js",
     "scripts": {
-        "aaa": "node ./bill/6.js -env prod",
+        "aaa": "node ./bill/7.js -env prod",
         "bbb": "node ./bill/runAll.js -env prod",
         "bc": "node ./bill/update.js -env prod",
         "aidsid": "node ./aidsid/run.js -env prod",
