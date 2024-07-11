@@ -32,8 +32,7 @@ let run = async function () {
         let dUsers = res[0]
       
         let sum=dUsers.length
-        console.log(sum);
-        return
+
         let i=0
         for(let item of dUsers){
             i++
