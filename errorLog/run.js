@@ -69,7 +69,7 @@ let run = async function () {
         let onceFactor = info['_source'].charge_once_factor
 
         let once = Number(info['_source'].charge_deduct_once)
-        let onceNumber = Number(once).mul(onceFactor).toFixed()
+        let onceNumber = new Decimal(once).mul(onceFactor).toFixed()
         let videoSize = Number(info['_source'].charge_deduct_video_size)
         let textSize = Number(info['_source'].charge_deduct_size) - videoSize
         let textNumber = new Decimal(textSize).mul(factor).toFixed()
