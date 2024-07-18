@@ -53,9 +53,9 @@ const fucntionClass = {
             realFactor: '1',
         }
         try {
-            let factor = await this.factor(db, baseInfo, '/yqms/v4/api/subject/v2/subjects')
-            let sql1 = `select IFNULL(sum(charge_deduct_size),0) as total from bill_yqms where name='/yqms/v4/api/subject/v2/subjects' and uid=${baseInfo.aid} and contract_id='${baseInfo.contract_id}' and stime between '${baseInfo.start}' and '${baseInfo.end}' and supplement=1`
-            let sql2 = `select IFNULL(sum(charge_deduct_size),0) as total from bill_yqms where name='/yqms/v4/api/subject/v2/subjects' and uid=${baseInfo.aid} and contract_id='${baseInfo.contract_id}' and stime between '${baseInfo.start}' and '${baseInfo.end}' and supplement=2`
+            let factor = await this.factor(db, baseInfo, '/yqms-dev/v4/api/subject/v2/subjects')
+            let sql1 = `select IFNULL(sum(charge_deduct_size),0) as total from bill_yqms where name='/yqms-dev/v4/api/subject/v2/subjects' and uid=${baseInfo.aid} and contract_id='${baseInfo.contract_id}' and stime between '${baseInfo.start}' and '${baseInfo.end}' and supplement=1`
+            let sql2 = `select IFNULL(sum(charge_deduct_size),0) as total from bill_yqms where name='/yqms-dev/v4/api/subject/v2/subjects' and uid=${baseInfo.aid} and contract_id='${baseInfo.contract_id}' and stime between '${baseInfo.start}' and '${baseInfo.end}' and supplement=2`
             await Promise.all([
                 db.query(sql1),
                 db.query(sql2)
@@ -89,9 +89,9 @@ const fucntionClass = {
             realFactor: '1',
         }
         try {
-            let factor = await this.factor(db, baseInfo, '/yqms/v4/api/subject/infos')
-            let sql1 = `select IFNULL(sum(charge_deduct_size),0) as total from bill_yqms where name='/yqms/v4/api/subject/infos' and uid=${baseInfo.aid} and contract_id='${baseInfo.contract_id}' and stime between '${baseInfo.start}' and '${baseInfo.end}' and supplement=1`
-            let sql2 = `select IFNULL(sum(charge_deduct_size),0) as total from bill_yqms where name='/yqms/v4/api/subject/infos' and uid=${baseInfo.aid} and contract_id='${baseInfo.contract_id}' and stime between '${baseInfo.start}' and '${baseInfo.end}' and supplement=2`
+            let factor = await this.factor(db, baseInfo, '/yqms-dev/v4/api/subject/infos')
+            let sql1 = `select IFNULL(sum(charge_deduct_size),0) as total from bill_yqms where name='/yqms-dev/v4/api/subject/infos' and uid=${baseInfo.aid} and contract_id='${baseInfo.contract_id}' and stime between '${baseInfo.start}' and '${baseInfo.end}' and supplement=1`
+            let sql2 = `select IFNULL(sum(charge_deduct_size),0) as total from bill_yqms where name='/yqms-dev/v4/api/subject/infos' and uid=${baseInfo.aid} and contract_id='${baseInfo.contract_id}' and stime between '${baseInfo.start}' and '${baseInfo.end}' and supplement=2`
             await Promise.all([
                 db.query(sql1),
                 db.query(sql2)
@@ -125,9 +125,9 @@ const fucntionClass = {
             realFactor: '1',
         }
         try {
-            let factor = await this.factor(db, baseInfo, '/yqms/v4/api/warning/infos')
-            let sql1 = `select IFNULL(sum(charge_deduct_size),0) as total from bill_yqms where name='/yqms/v4/api/warning/infos' and uid=${baseInfo.aid} and contract_id='${baseInfo.contract_id}' and stime between '${baseInfo.start}' and '${baseInfo.end}' and supplement=1`
-            let sql2 = `select IFNULL(sum(charge_deduct_size),0) as total from bill_yqms where name='/yqms/v4/api/warning/infos' and uid=${baseInfo.aid} and contract_id='${baseInfo.contract_id}' and stime between '${baseInfo.start}' and '${baseInfo.end}' and supplement=2`
+            let factor = await this.factor(db, baseInfo, '/yqms-dev/v4/api/warning/infos')
+            let sql1 = `select IFNULL(sum(charge_deduct_size),0) as total from bill_yqms where name='/yqms-dev/v4/api/warning/infos' and uid=${baseInfo.aid} and contract_id='${baseInfo.contract_id}' and stime between '${baseInfo.start}' and '${baseInfo.end}' and supplement=1`
+            let sql2 = `select IFNULL(sum(charge_deduct_size),0) as total from bill_yqms where name='/yqms-dev/v4/api/warning/infos' and uid=${baseInfo.aid} and contract_id='${baseInfo.contract_id}' and stime between '${baseInfo.start}' and '${baseInfo.end}' and supplement=2`
             await Promise.all([
                 db.query(sql1),
                 db.query(sql2)

@@ -52,7 +52,7 @@ const fucntionClass = {
             realFactor:'1',
         }
         try {
-            let factor = await this.factor(db, baseInfo, '/api/v3/spread/sync/comment', 30, 'weibo')
+            let factor = await this.factor(db, baseInfo, '/api-dev/v3/spread/sync/comment', 30, 'weibo')
             
             let sql1 = `
              SELECT
@@ -99,7 +99,7 @@ const fucntionClass = {
             realFactor:'1',
         }
         try {
-            let factor = await this.factor(db, baseInfo, '/api/v3/spread/sync/comment', 31, 'weixin')
+            let factor = await this.factor(db, baseInfo, '/api-dev/v3/spread/sync/comment', 31, 'weixin')
             
             let sql1 = `
              SELECT
@@ -146,7 +146,7 @@ const fucntionClass = {
             realFactor:'1',
         }
         try {
-            let factor = await this.factor(db, baseInfo, '/api/v3/spread/sync/comment', 32, 'douyin')
+            let factor = await this.factor(db, baseInfo, '/api-dev/v3/spread/sync/comment', 32, 'douyin')
             
             let sql1 = `
              SELECT
@@ -193,7 +193,7 @@ const fucntionClass = {
             realFactor:'1',
         }
         try {
-            let factor = await this.factor(db, baseInfo, '/api/v3/spread/sync/comment', 122, 'kuaishou')
+            let factor = await this.factor(db, baseInfo, '/api-dev/v3/spread/sync/comment', 122, 'kuaishou')
             
             let sql1 = `
              SELECT
@@ -240,7 +240,7 @@ const fucntionClass = {
             realFactor:'1',
         }
         try {
-            let factor = await this.factor(db, baseInfo, '/api/v3/spread/sync/comment', 123, 'xiaohongshu')
+            let factor = await this.factor(db, baseInfo, '/api-dev/v3/spread/sync/comment', 123, 'xiaohongshu')
             let sql1 = `
              SELECT
              (select IFNULL(sum(times),0) from bill_comment where domain='xiaohongshu' and uid=${baseInfo.aid} and contract_id='${baseInfo.contract_id}' and stime between '${baseInfo.start}' and '${baseInfo.end}' and supplement=1) 
@@ -286,7 +286,7 @@ const fucntionClass = {
             realFactor:'1',
         }
         try {
-            let factor = await this.factor(db, baseInfo, '/api/v3/spread/sync/comment', 124, 'toutiao')
+            let factor = await this.factor(db, baseInfo, '/api-dev/v3/spread/sync/comment', 124, 'toutiao')
             let sql1 = `
              SELECT
              (select IFNULL(sum(times),0) from bill_comment where domain='toutiao' and uid=${baseInfo.aid} and contract_id='${baseInfo.contract_id}' and stime between '${baseInfo.start}' and '${baseInfo.end}' and supplement=1) 
@@ -332,7 +332,7 @@ const fucntionClass = {
             realFactor:'1',
         }
         try {
-            let factor = await this.factor(db, baseInfo, '/api/v3/spread/sync/comment', 125, 'zhihu')
+            let factor = await this.factor(db, baseInfo, '/api-dev/v3/spread/sync/comment', 125, 'zhihu')
             let sql1 = `
              SELECT
              (select IFNULL(sum(times),0) from bill_comment where domain='zhihu' and uid=${baseInfo.aid} and contract_id='${baseInfo.contract_id}' and stime between '${baseInfo.start}' and '${baseInfo.end}' and supplement=1) 
@@ -378,7 +378,7 @@ const fucntionClass = {
             realFactor:'1',
         }
         try {
-            let factor = await this.factor(db, baseInfo, '/api/v3/spread/sync/comment', 233, 'douyinChild')
+            let factor = await this.factor(db, baseInfo, '/api-dev/v3/spread/sync/comment', 233, 'douyinChild')
             let sql1 = `
              SELECT
              (select IFNULL(sum(times),0) from bill_comment where domain='douyinChild' and uid=${baseInfo.aid} and contract_id='${baseInfo.contract_id}' and stime between '${baseInfo.start}' and '${baseInfo.end}' and supplement=1) 

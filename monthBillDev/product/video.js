@@ -52,7 +52,7 @@ const fucntionClass = {
             realFactor: '1',
         }
         try {
-            let factor = await this.factor(db, baseInfo, '/api/v3/spread/sync/download/video', 147, 'weibo')
+            let factor = await this.factor(db, baseInfo, '/api-dev/v3/spread/sync/download/video', 147, 'weibo')
             let sql1 = `select IFNULL(sum(times),0) as total from bill_video where domain='weibo' and uid=${baseInfo.aid} and contract_id='${baseInfo.contract_id}' and stime between '${baseInfo.start}' and '${baseInfo.end}' and supplement=1`
             let sql2 = `select IFNULL(sum(times),0) as total from bill_video where domain='weibo' and uid=${baseInfo.aid} and contract_id='${baseInfo.contract_id}' and stime between '${baseInfo.start}' and '${baseInfo.end}' and supplement=2`
             await Promise.all([
@@ -88,7 +88,7 @@ const fucntionClass = {
             realFactor: '1',
         }
         try {
-            let factor = await this.factor(db, baseInfo, '/api/v3/spread/sync/download/video', 148, 'douyin')
+            let factor = await this.factor(db, baseInfo, '/api-dev/v3/spread/sync/download/video', 148, 'douyin')
             let sql1 = `select IFNULL(sum(times),0) as total from bill_video where domain='douyin' and uid=${baseInfo.aid} and contract_id='${baseInfo.contract_id}' and stime between '${baseInfo.start}' and '${baseInfo.end}' and supplement=1`
             let sql2 = `select IFNULL(sum(times),0) as total from bill_video where domain='douyin' and uid=${baseInfo.aid} and contract_id='${baseInfo.contract_id}' and stime between '${baseInfo.start}' and '${baseInfo.end}' and supplement=2`
             await Promise.all([
@@ -124,7 +124,7 @@ const fucntionClass = {
             realFactor: '1',
         }
         try {
-            let factor = await this.factor(db, baseInfo, '/api/v3/spread/sync/download/video', 149, 'kuaishou')
+            let factor = await this.factor(db, baseInfo, '/api-dev/v3/spread/sync/download/video', 149, 'kuaishou')
             let sql1 = `select IFNULL(sum(times),0) as total from bill_video where domain='kuaishou' and uid=${baseInfo.aid} and contract_id='${baseInfo.contract_id}' and stime between '${baseInfo.start}' and '${baseInfo.end}' and supplement=1`
             let sql2 = `select IFNULL(sum(times),0) as total from bill_video where domain='kuaishou' and uid=${baseInfo.aid} and contract_id='${baseInfo.contract_id}' and stime between '${baseInfo.start}' and '${baseInfo.end}' and supplement=2`
             await Promise.all([
@@ -160,7 +160,7 @@ const fucntionClass = {
             realFactor: '1',
         }
         try {
-            let factor = await this.factor(db, baseInfo, '/api/v3/spread/sync/download/video', 150, 'bilibili')
+            let factor = await this.factor(db, baseInfo, '/api-dev/v3/spread/sync/download/video', 150, 'bilibili')
             let sql1 = `select IFNULL(sum(times),0) as total from bill_video where domain='bilibili' and uid=${baseInfo.aid} and contract_id='${baseInfo.contract_id}' and stime between '${baseInfo.start}' and '${baseInfo.end}' and supplement=1`
             let sql2 = `select IFNULL(sum(times),0) as total from bill_video where domain='bilibili' and uid=${baseInfo.aid} and contract_id='${baseInfo.contract_id}' and stime between '${baseInfo.start}' and '${baseInfo.end}' and supplement=2`
             await Promise.all([
@@ -196,7 +196,7 @@ const fucntionClass = {
             realFactor: '1',
         }
         try {
-            let factor = await this.factor(db, baseInfo, '/api/v3/spread/sync/download/video', 151, 'haokan')
+            let factor = await this.factor(db, baseInfo, '/api-dev/v3/spread/sync/download/video', 151, 'haokan')
             let sql1 = `select IFNULL(sum(times),0) as total from bill_video where domain='haokan' and uid=${baseInfo.aid} and contract_id='${baseInfo.contract_id}' and stime between '${baseInfo.start}' and '${baseInfo.end}' and supplement=1`
             let sql2 = `select IFNULL(sum(times),0) as total from bill_video where domain='haokan' and uid=${baseInfo.aid} and contract_id='${baseInfo.contract_id}' and stime between '${baseInfo.start}' and '${baseInfo.end}' and supplement=2`
             await Promise.all([
@@ -232,7 +232,7 @@ const fucntionClass = {
             realFactor: '1',
         }
         try {
-            let factor = await this.factor(db, baseInfo, '/api/v3/spread/sync/download/video', 152, 'xigua')
+            let factor = await this.factor(db, baseInfo, '/api-dev/v3/spread/sync/download/video', 152, 'xigua')
             let sql1 = `select IFNULL(sum(times),0) as total from bill_video where domain='xigua' and uid=${baseInfo.aid} and contract_id='${baseInfo.contract_id}' and stime between '${baseInfo.start}' and '${baseInfo.end}' and supplement=1`
             let sql2 = `select IFNULL(sum(times),0) as total from bill_video where domain='xigua' and uid=${baseInfo.aid} and contract_id='${baseInfo.contract_id}' and stime between '${baseInfo.start}' and '${baseInfo.end}' and supplement=2`
             await Promise.all([
@@ -268,7 +268,7 @@ const fucntionClass = {
             realFactor: '1',
         }
         try {
-            let factor = await this.factor(db, baseInfo, '/api/v3/spread/sync/download/video', 153, 'weishi')
+            let factor = await this.factor(db, baseInfo, '/api-dev/v3/spread/sync/download/video', 153, 'weishi')
             let sql1 = `select IFNULL(sum(times),0) as total from bill_video where domain='weishi' and uid=${baseInfo.aid} and contract_id='${baseInfo.contract_id}' and stime between '${baseInfo.start}' and '${baseInfo.end}' and supplement=1`
             let sql2 = `select IFNULL(sum(times),0) as total from bill_video where domain='weishi' and uid=${baseInfo.aid} and contract_id='${baseInfo.contract_id}' and stime between '${baseInfo.start}' and '${baseInfo.end}' and supplement=2`
             await Promise.all([

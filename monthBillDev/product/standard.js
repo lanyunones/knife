@@ -63,7 +63,7 @@ const fucntionClass = {
             more: '1'
         }
         try {
-            let factor = await this.factor(db, baseInfo, '/api/allField')
+            let factor = await this.factor(db, baseInfo, '/api-dev/allField')
             let sql1 = `
             SELECT
              (select IFNULL(sum(total),0) from back_bill_all_flag_2023 where sjpt_uid='${baseInfo.sid}' and stime between '${baseInfo.start}' and '${baseInfo.end}' and supplement=1) 
@@ -121,7 +121,7 @@ const fucntionClass = {
 
         }
         try {
-            let factor = await this.factor(db, baseInfo, '/api/v3/v1/search')
+            let factor = await this.factor(db, baseInfo, '/api-dev/v3/v1/search')
             let sql1 = `
             SELECT
              (select IFNULL(sum(total),0) from bill_zx_flag where sjpt_uid='${baseInfo.sid}' and stime between '${baseInfo.start}' and '${baseInfo.end}' and supplement=1) 
@@ -178,7 +178,7 @@ const fucntionClass = {
 
         }
         try {
-            let factor = await this.factor(db, baseInfo, '/api/v3/xsearch')
+            let factor = await this.factor(db, baseInfo, '/api-dev/v3/xsearch')
             let sql1 = `
                 SELECT 
                     IFNULL(sum(charge_deduct_size),0) as total
@@ -239,7 +239,7 @@ const fucntionClass = {
 
         }
         try {
-            let factor = await this.factor(db, baseInfo, '/api/v3/vsearch')
+            let factor = await this.factor(db, baseInfo, '/api-dev/v3/vsearch')
             let sql1 = `
                 SELECT 
                     IFNULL(sum(charge_deduct_size),0) as total
@@ -300,7 +300,7 @@ const fucntionClass = {
 
         }
         try {
-            let factor = await this.factor(db, baseInfo, '/api/v3/sliceSearch')
+            let factor = await this.factor(db, baseInfo, '/api-dev/v3/sliceSearch')
             let sql1 = `
                 SELECT 
                     IFNULL(sum(charge_deduct_size),0) as total
@@ -362,7 +362,7 @@ const fucntionClass = {
 
         }
         try {
-            let factor = await this.factor(db, baseInfo, '/api/v3/consult/search')
+            let factor = await this.factor(db, baseInfo, '/api-dev/v3/consult/search')
 
             let sql1 = `
                 SELECT 
@@ -429,7 +429,7 @@ const fucntionClass = {
 
         }
         try {
-            let factor = await this.factor(db, baseInfo, '/api/v3/consult/total')
+            let factor = await this.factor(db, baseInfo, '/api-dev/v3/consult/total')
 
             let sql1 = `
                 SELECT 
@@ -490,7 +490,7 @@ const fucntionClass = {
 
         }
         try {
-            let factor = await this.factor(db, baseInfo, '/api/v3/kafka/task')
+            let factor = await this.factor(db, baseInfo, '/api-dev/v3/kafka/task')
 
             let sql1 = `
                 SELECT 
@@ -556,7 +556,7 @@ const fucntionClass = {
             more: '1'
         }
         try {
-            let factor = await this.factor(db, baseInfo, '/api/v3/subscribe/subject/create')
+            let factor = await this.factor(db, baseInfo, '/api-dev/v3/subscribe/subject/create')
             let sql1 = `
                 SELECT 
                     IFNULL(sum(total),0) as textSize              

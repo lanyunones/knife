@@ -53,7 +53,7 @@ const fucntionClass = {
             realFactor: '1',
         }
         try {
-            let factor = await this.factor(db, baseInfo, '/api/v3/index/keyword/weibo', 204)
+            let factor = await this.factor(db, baseInfo, '/api-dev/v3/index/keyword/weibo', 204)
             let sql1 = `select IFNULL(sum(times),0) as total from bill_index where domain='keywordsWeibo' and uid=${baseInfo.aid} and contract_id='${baseInfo.contract_id}' and stime between '${baseInfo.start}' and '${baseInfo.end}' and supplement=1`
             let sql2 = `select IFNULL(sum(times),0) as total from bill_index where domain='keywordsWeibo' and uid=${baseInfo.aid} and contract_id='${baseInfo.contract_id}' and stime between '${baseInfo.start}' and '${baseInfo.end}' and supplement=2`
             await Promise.all([
@@ -89,7 +89,7 @@ const fucntionClass = {
             realFactor: '1',
         }
         try {
-            let factor = await this.factor(db, baseInfo, '/api/v3/index/keyword/toutiao', 205)
+            let factor = await this.factor(db, baseInfo, '/api-dev/v3/index/keyword/toutiao', 205)
             let sql1 = `select IFNULL(sum(times),0) as total from bill_index where domain='keywordsToutiao' and uid=${baseInfo.aid} and contract_id='${baseInfo.contract_id}' and stime between '${baseInfo.start}' and '${baseInfo.end}' and supplement=1`
             let sql2 = `select IFNULL(sum(times),0) as total from bill_index where domain='keywordsToutiao' and uid=${baseInfo.aid} and contract_id='${baseInfo.contract_id}' and stime between '${baseInfo.start}' and '${baseInfo.end}' and supplement=2`
             await Promise.all([
@@ -125,7 +125,7 @@ const fucntionClass = {
             realFactor: '1',
         }
         try {
-            let factor = await this.factor(db, baseInfo, '/api/v3/index/keyword/douyin', 206)
+            let factor = await this.factor(db, baseInfo, '/api-dev/v3/index/keyword/douyin', 206)
             let sql1 = `select IFNULL(sum(times),0) as total from bill_index where domain='keywordsDouyin' and uid=${baseInfo.aid} and contract_id='${baseInfo.contract_id}' and stime between '${baseInfo.start}' and '${baseInfo.end}' and supplement=1`
             let sql2 = `select IFNULL(sum(times),0) as total from bill_index where domain='keywordsDouyin' and uid=${baseInfo.aid} and contract_id='${baseInfo.contract_id}' and stime between '${baseInfo.start}' and '${baseInfo.end}' and supplement=2`
             await Promise.all([
@@ -161,7 +161,7 @@ const fucntionClass = {
             realFactor: '1',
         }
         try {
-            let factor = await this.factor(db, baseInfo, '/api/v3/index/create', 169, 'weibo')
+            let factor = await this.factor(db, baseInfo, '/api-dev/v3/index/create', 169, 'weibo')
             let sql1 = `select IFNULL(sum(times),0) as total from bill_index where domain='weibo' and uid=${baseInfo.aid} and contract_id='${baseInfo.contract_id}' and stime between '${baseInfo.start}' and '${baseInfo.end}' and supplement=1`
             let sql2 = `select IFNULL(sum(times),0) as total from bill_index where domain='weibo' and uid=${baseInfo.aid} and contract_id='${baseInfo.contract_id}' and stime between '${baseInfo.start}' and '${baseInfo.end}' and supplement=2`
             await Promise.all([
@@ -197,7 +197,7 @@ const fucntionClass = {
             realFactor: '1',
         }
         try {
-            let factor = await this.factor(db, baseInfo, '/api/v3/index/create', 170, 'weixin')
+            let factor = await this.factor(db, baseInfo, '/api-dev/v3/index/create', 170, 'weixin')
             let sql1 = `select IFNULL(sum(times),0) as total from bill_index where domain='weixin' and uid=${baseInfo.aid} and contract_id='${baseInfo.contract_id}' and stime between '${baseInfo.start}' and '${baseInfo.end}' and supplement=1`
             let sql2 = `select IFNULL(sum(times),0) as total from bill_index where domain='weixin' and uid=${baseInfo.aid} and contract_id='${baseInfo.contract_id}' and stime between '${baseInfo.start}' and '${baseInfo.end}' and supplement=2`
             await Promise.all([
@@ -233,7 +233,7 @@ const fucntionClass = {
             realFactor: '1',
         }
         try {
-            let factor = await this.factor(db, baseInfo, '/api/v3/index/create', 171, 'douyin')
+            let factor = await this.factor(db, baseInfo, '/api-dev/v3/index/create', 171, 'douyin')
             let sql1 = `select IFNULL(sum(times),0) as total from bill_index where domain='douyin' and uid=${baseInfo.aid} and contract_id='${baseInfo.contract_id}' and stime between '${baseInfo.start}' and '${baseInfo.end}' and supplement=1`
             let sql2 = `select IFNULL(sum(times),0) as total from bill_index where domain='douyin' and uid=${baseInfo.aid} and contract_id='${baseInfo.contract_id}' and stime between '${baseInfo.start}' and '${baseInfo.end}' and supplement=2`
             await Promise.all([
