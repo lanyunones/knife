@@ -52,7 +52,7 @@ const fucntionClass = {
             realFactor: '1',
         }
         try {
-            let factor = await this.factor(db, baseInfo, '/api/v3/sync/canvas/data-number')
+            let factor = await this.factor(db, baseInfo, '/api-dev/v3/sync/canvas/data-number')
             let sql1 = `select IFNULL(sum(times),0) as total from bill_canvas where name='data-number' and type='sync' and uid=${baseInfo.aid} and contract_id='${baseInfo.contract_id}' and stime between '${baseInfo.start}' and '${baseInfo.end}' and supplement=1`
             let sql2 = `select IFNULL(sum(times),0) as total from bill_canvas where name='data-number' and type='sync' and uid=${baseInfo.aid} and contract_id='${baseInfo.contract_id}' and stime between '${baseInfo.start}' and '${baseInfo.end}' and supplement=2`
             await Promise.all([
@@ -86,7 +86,7 @@ const fucntionClass = {
             realAmount: "0"                      //应付价
         }
         try {
-            let factor = await this.factor(db, baseInfo, '/api/v3/sync/canvas/spread-index')
+            let factor = await this.factor(db, baseInfo, '/api-dev/v3/sync/canvas/spread-index')
             let sql1 = `select IFNULL(sum(times),0) as total from bill_canvas where name='spread-index' and type='sync' and uid=${baseInfo.aid} and contract_id='${baseInfo.contract_id}' and stime between '${baseInfo.start}' and '${baseInfo.end}' and supplement=1`
             let sql2 = `select IFNULL(sum(times),0) as total from bill_canvas where name='spread-index' and type='sync' and uid=${baseInfo.aid} and contract_id='${baseInfo.contract_id}' and stime between '${baseInfo.start}' and '${baseInfo.end}' and supplement=2`
             await Promise.all([
@@ -120,7 +120,7 @@ const fucntionClass = {
             realAmount: "0"                      //应付价
         }
         try {
-            let factor = await this.factor(db, baseInfo, '/api/v3/sync/canvas/source-spread-trend')
+            let factor = await this.factor(db, baseInfo, '/api-dev/v3/sync/canvas/source-spread-trend')
             let sql1 = `select IFNULL(sum(times),0) as total from bill_canvas where name='source-spread-trend' and type='sync' and uid=${baseInfo.aid} and contract_id='${baseInfo.contract_id}' and stime between '${baseInfo.start}' and '${baseInfo.end}' and supplement=1`
             let sql2 = `select IFNULL(sum(times),0) as total from bill_canvas where name='source-spread-trend' and type='sync' and uid=${baseInfo.aid} and contract_id='${baseInfo.contract_id}' and stime between '${baseInfo.start}' and '${baseInfo.end}' and supplement=2`
             await Promise.all([
@@ -154,7 +154,7 @@ const fucntionClass = {
             realAmount: "0"                      //应付价
         }
         try {
-            let factor = await this.factor(db, baseInfo, '/api/v3/sync/canvas/video-spread-trend')
+            let factor = await this.factor(db, baseInfo, '/api-dev/v3/sync/canvas/video-spread-trend')
             let sql1 = `select IFNULL(sum(times),0) as total from bill_canvas where name='video-spread-trend' and type='sync' and uid=${baseInfo.aid} and contract_id='${baseInfo.contract_id}' and stime between '${baseInfo.start}' and '${baseInfo.end}' and supplement=1`
             let sql2 = `select IFNULL(sum(times),0) as total from bill_canvas where name='video-spread-trend' and type='sync' and uid=${baseInfo.aid} and contract_id='${baseInfo.contract_id}' and stime between '${baseInfo.start}' and '${baseInfo.end}' and supplement=2`
             await Promise.all([
@@ -188,7 +188,7 @@ const fucntionClass = {
             realAmount: "0"                      //应付价
         }
         try {
-            let factor = await this.factor(db, baseInfo, '/api/v3/sync/canvas/tendentious-word-cloud')
+            let factor = await this.factor(db, baseInfo, '/api-dev/v3/sync/canvas/tendentious-word-cloud')
             let sql1 = `select IFNULL(sum(times),0) as total from bill_canvas where name='tendentious-word-cloud' and type='sync' and uid=${baseInfo.aid} and contract_id='${baseInfo.contract_id}' and stime between '${baseInfo.start}' and '${baseInfo.end}' and supplement=1`
             let sql2 = `select IFNULL(sum(times),0) as total from bill_canvas where name='tendentious-word-cloud' and type='sync' and uid=${baseInfo.aid} and contract_id='${baseInfo.contract_id}' and stime between '${baseInfo.start}' and '${baseInfo.end}' and supplement=2`
             await Promise.all([
@@ -222,7 +222,7 @@ const fucntionClass = {
             realAmount: "0"                      //应付价
         }
         try {
-            let factor = await this.factor(db, baseInfo, '/api/v3/sync/canvas/media-source')
+            let factor = await this.factor(db, baseInfo, '/api-dev/v3/sync/canvas/media-source')
             let sql1 = `select IFNULL(sum(times),0) as total from bill_canvas where name='media-source' and type='sync' and uid=${baseInfo.aid} and contract_id='${baseInfo.contract_id}' and stime between '${baseInfo.start}' and '${baseInfo.end}' and supplement=1`
             let sql2 = `select IFNULL(sum(times),0) as total from bill_canvas where name='media-source' and type='sync' and uid=${baseInfo.aid} and contract_id='${baseInfo.contract_id}' and stime between '${baseInfo.start}' and '${baseInfo.end}' and supplement=2`
             await Promise.all([
@@ -256,7 +256,7 @@ const fucntionClass = {
             realAmount: "0"                      //应付价
         }
         try {
-            let factor = await this.factor(db, baseInfo, '/api/v3/sync/canvas/active-media-top')
+            let factor = await this.factor(db, baseInfo, '/api-dev/v3/sync/canvas/active-media-top')
             let sql1 = `select IFNULL(sum(times),0) as total from bill_canvas where name='active-media-top' and type='sync' and uid=${baseInfo.aid} and contract_id='${baseInfo.contract_id}' and stime between '${baseInfo.start}' and '${baseInfo.end}' and supplement=1`
             let sql2 = `select IFNULL(sum(times),0) as total from bill_canvas where name='active-media-top' and type='sync' and uid=${baseInfo.aid} and contract_id='${baseInfo.contract_id}' and stime between '${baseInfo.start}' and '${baseInfo.end}' and supplement=2`
             await Promise.all([
@@ -290,7 +290,7 @@ const fucntionClass = {
             realAmount: "0"                      //应付价
         }
         try {
-            let factor = await this.factor(db, baseInfo, '/api/v3/sync/canvas/tendentious-trend')
+            let factor = await this.factor(db, baseInfo, '/api-dev/v3/sync/canvas/tendentious-trend')
             let sql1 = `select IFNULL(sum(times),0) as total from bill_canvas where name='tendentious-trend' and type='sync' and uid=${baseInfo.aid} and contract_id='${baseInfo.contract_id}' and stime between '${baseInfo.start}' and '${baseInfo.end}' and supplement=1`
             let sql2 = `select IFNULL(sum(times),0) as total from bill_canvas where name='tendentious-trend' and type='sync' and uid=${baseInfo.aid} and contract_id='${baseInfo.contract_id}' and stime between '${baseInfo.start}' and '${baseInfo.end}' and supplement=2`
             await Promise.all([
@@ -324,7 +324,7 @@ const fucntionClass = {
             realAmount: "0"                      //应付价
         }
         try {
-            let factor = await this.factor(db, baseInfo, '/api/v3/sync/canvas/mood-analyse')
+            let factor = await this.factor(db, baseInfo, '/api-dev/v3/sync/canvas/mood-analyse')
             let sql1 = `select IFNULL(sum(times),0) as total from bill_canvas where name='mood-analyse' and type='sync' and uid=${baseInfo.aid} and contract_id='${baseInfo.contract_id}' and stime between '${baseInfo.start}' and '${baseInfo.end}' and supplement=1`
             let sql2 = `select IFNULL(sum(times),0) as total from bill_canvas where name='mood-analyse' and type='sync' and uid=${baseInfo.aid} and contract_id='${baseInfo.contract_id}' and stime between '${baseInfo.start}' and '${baseInfo.end}' and supplement=2`
             await Promise.all([
@@ -358,7 +358,7 @@ const fucntionClass = {
             realAmount: "0"                      //应付价
         }
         try {
-            let factor = await this.factor(db, baseInfo, '/api/v3/sync/canvas/interact-grow-trend')
+            let factor = await this.factor(db, baseInfo, '/api-dev/v3/sync/canvas/interact-grow-trend')
             let sql1 = `select IFNULL(sum(times),0) as total from bill_canvas where name='interact-grow-trend' and type='sync' and uid=${baseInfo.aid} and contract_id='${baseInfo.contract_id}' and stime between '${baseInfo.start}' and '${baseInfo.end}' and supplement=1`
             let sql2 = `select IFNULL(sum(times),0) as total from bill_canvas where name='interact-grow-trend' and type='sync' and uid=${baseInfo.aid} and contract_id='${baseInfo.contract_id}' and stime between '${baseInfo.start}' and '${baseInfo.end}' and supplement=2`
             await Promise.all([
@@ -392,7 +392,7 @@ const fucntionClass = {
             realAmount: "0"                      //应付价
         }
         try {
-            let factor = await this.factor(db, baseInfo, '/api/v3/sync/canvas/publish-grow-trend')
+            let factor = await this.factor(db, baseInfo, '/api-dev/v3/sync/canvas/publish-grow-trend')
             let sql1 = `select IFNULL(sum(times),0) as total from bill_canvas where name='publish-grow-trend' and type='sync' and uid=${baseInfo.aid} and contract_id='${baseInfo.contract_id}' and stime between '${baseInfo.start}' and '${baseInfo.end}' and supplement=1`
             let sql2 = `select IFNULL(sum(times),0) as total from bill_canvas where name='publish-grow-trend' and type='sync' and uid=${baseInfo.aid} and contract_id='${baseInfo.contract_id}' and stime between '${baseInfo.start}' and '${baseInfo.end}' and supplement=2`
             await Promise.all([
@@ -426,7 +426,7 @@ const fucntionClass = {
             realAmount: "0"                      //应付价
         }
         try {
-            let factor = await this.factor(db, baseInfo, '/api/v3/sync/canvas/attend-number')
+            let factor = await this.factor(db, baseInfo, '/api-dev/v3/sync/canvas/attend-number')
             let sql1 = `select IFNULL(sum(times),0) as total from bill_canvas where name='attend-number' and type='sync' and uid=${baseInfo.aid} and contract_id='${baseInfo.contract_id}' and stime between '${baseInfo.start}' and '${baseInfo.end}' and supplement=1`
             let sql2 = `select IFNULL(sum(times),0) as total from bill_canvas where name='attend-number' and type='sync' and uid=${baseInfo.aid} and contract_id='${baseInfo.contract_id}' and stime between '${baseInfo.start}' and '${baseInfo.end}' and supplement=2`
             await Promise.all([
@@ -460,7 +460,7 @@ const fucntionClass = {
             realAmount: "0"                      //应付价
         }
         try {
-            let factor = await this.factor(db, baseInfo, '/api/v3/sync/canvas/web-type')
+            let factor = await this.factor(db, baseInfo, '/api-dev/v3/sync/canvas/web-type')
             let sql1 = `select IFNULL(sum(times),0) as total from bill_canvas where name='web-type' and type='sync' and uid=${baseInfo.aid} and contract_id='${baseInfo.contract_id}' and stime between '${baseInfo.start}' and '${baseInfo.end}' and supplement=1`
             let sql2 = `select IFNULL(sum(times),0) as total from bill_canvas where name='web-type' and type='sync' and uid=${baseInfo.aid} and contract_id='${baseInfo.contract_id}' and stime between '${baseInfo.start}' and '${baseInfo.end}' and supplement=2`
             await Promise.all([
@@ -494,7 +494,7 @@ const fucntionClass = {
             realAmount: "0"                      //应付价
         }
         try {
-            let factor = await this.factor(db, baseInfo, '/api/v3/sync/canvas/graded-media-attend')
+            let factor = await this.factor(db, baseInfo, '/api-dev/v3/sync/canvas/graded-media-attend')
             let sql1 = `select IFNULL(sum(times),0) as total from bill_canvas where name='graded-media-attend' and type='sync' and uid=${baseInfo.aid} and contract_id='${baseInfo.contract_id}' and stime between '${baseInfo.start}' and '${baseInfo.end}' and supplement=1`
             let sql2 = `select IFNULL(sum(times),0) as total from bill_canvas where name='graded-media-attend' and type='sync' and uid=${baseInfo.aid} and contract_id='${baseInfo.contract_id}' and stime between '${baseInfo.start}' and '${baseInfo.end}' and supplement=2`
             await Promise.all([
@@ -528,7 +528,7 @@ const fucntionClass = {
             realAmount: "0"                      //应付价
         }
         try {
-            let factor = await this.factor(db, baseInfo, '/api/v3/sync/canvas/rank-type-ranking')
+            let factor = await this.factor(db, baseInfo, '/api-dev/v3/sync/canvas/rank-type-ranking')
             let sql1 = `select IFNULL(sum(times),0) as total from bill_canvas where name='rank-type-ranking' and type='sync' and uid=${baseInfo.aid} and contract_id='${baseInfo.contract_id}' and stime between '${baseInfo.start}' and '${baseInfo.end}' and supplement=1`
             let sql2 = `select IFNULL(sum(times),0) as total from bill_canvas where name='rank-type-ranking' and type='sync' and uid=${baseInfo.aid} and contract_id='${baseInfo.contract_id}' and stime between '${baseInfo.start}' and '${baseInfo.end}' and supplement=2`
             await Promise.all([
@@ -562,7 +562,7 @@ const fucntionClass = {
             realAmount: "0"                      //应付价
         }
         try {
-            let factor = await this.factor(db, baseInfo, '/api/v3/sync/canvas/region-spread')
+            let factor = await this.factor(db, baseInfo, '/api-dev/v3/sync/canvas/region-spread')
             let sql1 = `select IFNULL(sum(times),0) as total from bill_canvas where name='region-spread' and type='sync' and uid=${baseInfo.aid} and contract_id='${baseInfo.contract_id}' and stime between '${baseInfo.start}' and '${baseInfo.end}' and supplement=1`
             let sql2 = `select IFNULL(sum(times),0) as total from bill_canvas where name='region-spread' and type='sync' and uid=${baseInfo.aid} and contract_id='${baseInfo.contract_id}' and stime between '${baseInfo.start}' and '${baseInfo.end}' and supplement=2`
             await Promise.all([
@@ -596,7 +596,7 @@ const fucntionClass = {
             realAmount: "0"                      //应付价
         }
         try {
-            let factor = await this.factor(db, baseInfo, '/api/v3/sync/canvas/gender')
+            let factor = await this.factor(db, baseInfo, '/api-dev/v3/sync/canvas/gender')
             let sql1 = `select IFNULL(sum(times),0) as total from bill_canvas where name='gender' and type='sync' and uid=${baseInfo.aid} and contract_id='${baseInfo.contract_id}' and stime between '${baseInfo.start}' and '${baseInfo.end}' and supplement=1`
             let sql2 = `select IFNULL(sum(times),0) as total from bill_canvas where name='gender' and type='sync' and uid=${baseInfo.aid} and contract_id='${baseInfo.contract_id}' and stime between '${baseInfo.start}' and '${baseInfo.end}' and supplement=2`
             await Promise.all([
@@ -630,7 +630,7 @@ const fucntionClass = {
             realAmount: "0"                      //应付价
         }
         try {
-            let factor = await this.factor(db, baseInfo, '/api/v3/sync/canvas/auth-type')
+            let factor = await this.factor(db, baseInfo, '/api-dev/v3/sync/canvas/auth-type')
             let sql1 = `select IFNULL(sum(times),0) as total from bill_canvas where name='auth-type' and type='sync' and uid=${baseInfo.aid} and contract_id='${baseInfo.contract_id}' and stime between '${baseInfo.start}' and '${baseInfo.end}' and supplement=1`
             let sql2 = `select IFNULL(sum(times),0) as total from bill_canvas where name='auth-type' and type='sync' and uid=${baseInfo.aid} and contract_id='${baseInfo.contract_id}' and stime between '${baseInfo.start}' and '${baseInfo.end}' and supplement=2`
             await Promise.all([
@@ -664,7 +664,7 @@ const fucntionClass = {
             realAmount: "0"                      //应付价
         }
         try {
-            let factor = await this.factor(db, baseInfo, '/api/v3/sync/canvas/fan-spread')
+            let factor = await this.factor(db, baseInfo, '/api-dev/v3/sync/canvas/fan-spread')
             let sql1 = `select IFNULL(sum(times),0) as total from bill_canvas where name='fan-spread' and type='sync' and uid=${baseInfo.aid} and contract_id='${baseInfo.contract_id}' and stime between '${baseInfo.start}' and '${baseInfo.end}' and supplement=1`
             let sql2 = `select IFNULL(sum(times),0) as total from bill_canvas where name='fan-spread' and type='sync' and uid=${baseInfo.aid} and contract_id='${baseInfo.contract_id}' and stime between '${baseInfo.start}' and '${baseInfo.end}' and supplement=2`
             await Promise.all([
@@ -698,7 +698,7 @@ const fucntionClass = {
             realAmount: "0"                      //应付价
         }
         try {
-            let factor = await this.factor(db, baseInfo, '/api/v3/sync/canvas/video-fan-spread')
+            let factor = await this.factor(db, baseInfo, '/api-dev/v3/sync/canvas/video-fan-spread')
             let sql1 = `select IFNULL(sum(times),0) as total from bill_canvas where name='video-fan-spread' and type='sync' and uid=${baseInfo.aid} and contract_id='${baseInfo.contract_id}' and stime between '${baseInfo.start}' and '${baseInfo.end}' and supplement=1`
             let sql2 = `select IFNULL(sum(times),0) as total from bill_canvas where name='video-fan-spread' and type='sync' and uid=${baseInfo.aid} and contract_id='${baseInfo.contract_id}' and stime between '${baseInfo.start}' and '${baseInfo.end}' and supplement=2`
             await Promise.all([
@@ -732,7 +732,7 @@ const fucntionClass = {
             realAmount: "0"                      //应付价
         }
         try {
-            let factor = await this.factor(db, baseInfo, '/api/v3/sync/canvas/event-overview')
+            let factor = await this.factor(db, baseInfo, '/api-dev/v3/sync/canvas/event-overview')
             let sql1 = `select IFNULL(sum(times),0) as total from bill_canvas where name='event-overview' and type='sync' and uid=${baseInfo.aid} and contract_id='${baseInfo.contract_id}' and stime between '${baseInfo.start}' and '${baseInfo.end}' and supplement=1`
             let sql2 = `select IFNULL(sum(times),0) as total from bill_canvas where name='event-overview' and type='sync' and uid=${baseInfo.aid} and contract_id='${baseInfo.contract_id}' and stime between '${baseInfo.start}' and '${baseInfo.end}' and supplement=2`
             await Promise.all([
@@ -766,7 +766,7 @@ const fucntionClass = {
             realAmount: "0"                      //应付价
         }
         try {
-            let factor = await this.factor(db, baseInfo, '/api/v3/sync/canvas/video-event-overview')
+            let factor = await this.factor(db, baseInfo, '/api-dev/v3/sync/canvas/video-event-overview')
             let sql1 = `select IFNULL(sum(times),0) as total from bill_canvas where name='video-event-overview' and type='sync' and uid=${baseInfo.aid} and contract_id='${baseInfo.contract_id}' and stime between '${baseInfo.start}' and '${baseInfo.end}' and supplement=1`
             let sql2 = `select IFNULL(sum(times),0) as total from bill_canvas where name='video-event-overview' and type='sync' and uid=${baseInfo.aid} and contract_id='${baseInfo.contract_id}' and stime between '${baseInfo.start}' and '${baseInfo.end}' and supplement=2`
             await Promise.all([
@@ -800,7 +800,7 @@ const fucntionClass = {
             realAmount: "0"                      //应付价
         }
         try {
-            let factor = await this.factor(db, baseInfo, '/api/v3/sync/canvas/starting-media')
+            let factor = await this.factor(db, baseInfo, '/api-dev/v3/sync/canvas/starting-media')
             let sql1 = `select IFNULL(sum(times),0) as total from bill_canvas where name='starting-media' and type='sync' and uid=${baseInfo.aid} and contract_id='${baseInfo.contract_id}' and stime between '${baseInfo.start}' and '${baseInfo.end}' and supplement=1`
             let sql2 = `select IFNULL(sum(times),0) as total from bill_canvas where name='starting-media' and type='sync' and uid=${baseInfo.aid} and contract_id='${baseInfo.contract_id}' and stime between '${baseInfo.start}' and '${baseInfo.end}' and supplement=2`
             await Promise.all([
@@ -834,7 +834,7 @@ const fucntionClass = {
             realAmount: "0"                      //应付价
         }
         try {
-            let factor = await this.factor(db, baseInfo, '/api/v3/sync/canvas/hot-news')
+            let factor = await this.factor(db, baseInfo, '/api-dev/v3/sync/canvas/hot-news')
             let sql1 = `select IFNULL(sum(times),0) as total from bill_canvas where name='hot-news' and type='sync' and uid=${baseInfo.aid} and contract_id='${baseInfo.contract_id}' and stime between '${baseInfo.start}' and '${baseInfo.end}' and supplement=1`
             let sql2 = `select IFNULL(sum(times),0) as total from bill_canvas where name='hot-news' and type='sync' and uid=${baseInfo.aid} and contract_id='${baseInfo.contract_id}' and stime between '${baseInfo.start}' and '${baseInfo.end}' and supplement=2`
             await Promise.all([
@@ -868,7 +868,7 @@ const fucntionClass = {
             realAmount: "0"                      //应付价
         }
         try {
-            let factor = await this.factor(db, baseInfo, '/api/v3/sync/canvas/media-ranking')
+            let factor = await this.factor(db, baseInfo, '/api-dev/v3/sync/canvas/media-ranking')
             let sql1 = `select IFNULL(sum(times),0) as total from bill_canvas where name='media-ranking' and type='sync' and uid=${baseInfo.aid} and contract_id='${baseInfo.contract_id}' and stime between '${baseInfo.start}' and '${baseInfo.end}' and supplement=1`
             let sql2 = `select IFNULL(sum(times),0) as total from bill_canvas where name='media-ranking' and type='sync' and uid=${baseInfo.aid} and contract_id='${baseInfo.contract_id}' and stime between '${baseInfo.start}' and '${baseInfo.end}' and supplement=2`
             await Promise.all([
@@ -902,7 +902,7 @@ const fucntionClass = {
             realAmount: "0"                      //应付价
         }
         try {
-            let factor = await this.factor(db, baseInfo, '/api/v3/sync/canvas/volume-total')
+            let factor = await this.factor(db, baseInfo, '/api-dev/v3/sync/canvas/volume-total')
             let sql1 = `select IFNULL(sum(times),0) as total from bill_canvas where name='volume-total' and type='sync' and uid=${baseInfo.aid} and contract_id='${baseInfo.contract_id}' and stime between '${baseInfo.start}' and '${baseInfo.end}' and supplement=1`
             let sql2 = `select IFNULL(sum(times),0) as total from bill_canvas where name='volume-total' and type='sync' and uid=${baseInfo.aid} and contract_id='${baseInfo.contract_id}' and stime between '${baseInfo.start}' and '${baseInfo.end}' and supplement=2`
             await Promise.all([
@@ -936,7 +936,7 @@ const fucntionClass = {
             realAmount: "0"                      //应付价
         }
         try {
-            let factor = await this.factor(db, baseInfo, '/api/v3/sync/canvas/viewpoint-analyse')
+            let factor = await this.factor(db, baseInfo, '/api-dev/v3/sync/canvas/viewpoint-analyse')
             let sql1 = `select IFNULL(sum(times),0) as total from bill_canvas where name='viewpoint-analyse' and type='sync' and uid=${baseInfo.aid} and contract_id='${baseInfo.contract_id}' and stime between '${baseInfo.start}' and '${baseInfo.end}' and supplement=1`
             let sql2 = `select IFNULL(sum(times),0) as total from bill_canvas where name='viewpoint-analyse' and type='sync' and uid=${baseInfo.aid} and contract_id='${baseInfo.contract_id}' and stime between '${baseInfo.start}' and '${baseInfo.end}' and supplement=2`
             await Promise.all([
@@ -970,7 +970,7 @@ const fucntionClass = {
             realAmount: "0"                      //应付价
         }
         try {
-            let factor = await this.factor(db, baseInfo, '/api/v3/sync/canvas/event-context')
+            let factor = await this.factor(db, baseInfo, '/api-dev/v3/sync/canvas/event-context')
             let sql1 = `select IFNULL(sum(times),0) as total from bill_canvas where name='event-context' and type='sync' and uid=${baseInfo.aid} and contract_id='${baseInfo.contract_id}' and stime between '${baseInfo.start}' and '${baseInfo.end}' and supplement=1`
             let sql2 = `select IFNULL(sum(times),0) as total from bill_canvas where name='event-context' and type='sync' and uid=${baseInfo.aid} and contract_id='${baseInfo.contract_id}' and stime between '${baseInfo.start}' and '${baseInfo.end}' and supplement=2`
             await Promise.all([
