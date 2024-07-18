@@ -1,5 +1,5 @@
 const { map } = require('lodash')
-const factorReal = require('../logic/factorReal')
+const factorReal = require('../logic/factorReal.js')
 const { Decimal } = require('decimal.js')
 const { infoStandard } = require('../logic/insert.js')
 // 查询子服务
