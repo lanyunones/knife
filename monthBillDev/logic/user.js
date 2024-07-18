@@ -30,18 +30,19 @@ async function users(db) {
             let sql1 = `select IFNULL(sum(amount),0) as total from api_recharged where contract_id='${item.contract_id}' and account_id = ${item.aid} and is_deleted=0 and type in (1,2,3,6)`
             let sql2 = `select IFNULL(sum(balance),0) as total from bill_supplement where contract_id='${item.contract_id}' and account_id =${item.aid}`
             let sql3 = `select sjpt_account_id from account where account_id=${item.aid}`
+            
             await Promise.all([
                 db.query(sql1),
                 db.query(sql2),
                 db.query(sql3)
             ]).then(r => {
                 item.totalCharge = new Decimal(r[0][0][0].total).add(r[1][0][0].total).toFixed()
-                item.sid = r[2][0][0].sjpt_account_id
+                item.sid = r[2][0][0]?.sjpt_account_id ?? ''
             })
         }
-
         return list
     } catch (error) {
+        console.log(error);
         return []
     }
 }

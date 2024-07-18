@@ -25,29 +25,31 @@ let run = async function () {
     const rds = redis.dowding(args.env)
 
     try {
-
+       
         let users = await rds.get('dowding:billUser')
-
+       
         if (users != null && users != '') {
             users = JSON.parse(users)
         } else {
             users = await user.users(mdb)
             await rds.set('dowding:billUser', JSON.stringify(users), 'EX', 86400)
         }
-        
 
-        users = [
-            {
-            aid: 9022162,
-            sid: 3681467312320006,
-            order_detail_id: '6c7efbed5dd4c1b9',
-            contract_id: 'SJ2024031509',
-            contract_start: '1711900800000',
-            contract_end: '1743436799000',
-            totalCharge: '9930250000000000'
-          },
+        console.log(users);
+        return
+       
 
-        ]
+        // users = [
+        //     {
+        //     aid: 9022162,
+        //     sid: 3681467312320006,
+        //     order_detail_id: '6c7efbed5dd4c1b9',
+        //     contract_id: 'SJ2024031509',
+        //     contract_start: '1711900800000',
+        //     contract_end: '1743436799000',
+        //     totalCharge: '9930250000000000'
+        //   },
+        // ]
 
         // 按照用户生成账单
         for (const item of users) {
