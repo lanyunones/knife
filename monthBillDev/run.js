@@ -35,10 +35,6 @@ let run = async function () {
             await rds.set('dowding:billUser', JSON.stringify(users), 'EX', 86400)
         }
 
-        console.log(users);
-        return
-       
-
         // users = [
         //     {
         //     aid: 9022162,
@@ -53,6 +49,10 @@ let run = async function () {
 
         // 按照用户生成账单
         for (const item of users) {
+            if(item.sid == null || item.sid == ''){
+                continue
+            }
+
             // 时间
             let middle = moment().add(-1, 'months').startOf('months').add(14,'d').format('YYYY-MM-DD')
             let start = moment().add(-1, 'months').startOf('months').format('x')
@@ -70,7 +70,8 @@ let run = async function () {
 
             // 服务列表
             let serviceList = await user.serviceList(mdb, item.aid, item.order_detail_id)
-            
+
+           
             // 用户信息
             let baseInfo = {
                 aid: item.aid,
