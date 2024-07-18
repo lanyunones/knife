@@ -4,7 +4,7 @@ const axios = require('axios')
 //生成
 async function real(account_id, contract_id, url, source = '') {
     try {
-        let path = "http://admin-dowding.istarshine.net.cn/node-api/api/getFactor"
+        let path = "http://admin-dowding-dev.istarshine.com/node-api/api/getFactor"
         let body = {
             "account_id": account_id,
             "contract_id": contract_id,
