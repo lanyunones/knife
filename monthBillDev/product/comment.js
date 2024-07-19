@@ -275,7 +275,7 @@ const fucntionClass = {
     async toutiao(db, baseInfo){
         let list = {
             serviceName: "评论刷新",             //一级服务
-            serviceType: "小红书",            //二级服务
+            serviceType: "今日头条",            //二级服务
             dataNumber: '0',                     //数据量或者调用次数
             dataGiftNumber: '0',                 // 抹零          
             officialPrice: "0",                  //官方价
