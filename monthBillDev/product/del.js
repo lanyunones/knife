@@ -6,7 +6,7 @@ const { info } = require('../logic/insert.js')
 // 查询子服务
 async function child(db, baseInfo) {
     try {
-        let sql = `select service_api from contract_detail where account_id=${baseInfo.aid} and order_detail_id='${baseInfo.order_detail_id}' and service_class->'$.value'=128`
+        let sql = `select service_api from contract_detail where account_id=${baseInfo.aid} and order_detail_id='${baseInfo.order_detail_id}' and service_class->'$.value'=128 and is_deleted=0`
         let thirdChild = await db.query(sql)
         thirdChild = thirdChild[0]
         let apis = []
