@@ -25,9 +25,9 @@ let run = async function () {
     const rds = redis.dowding(args.env)
 
     try {
-       
+
         let users = await rds.get('dowding:billUser')
-       
+
         if (users != null && users != '') {
             users = JSON.parse(users)
         } else {
@@ -36,77 +36,74 @@ let run = async function () {
         }
 
         // users = [
-        //     {
-        //     aid: 9022162,
-        //     sid: 3681467312320006,
-        //     order_detail_id: '6c7efbed5dd4c1b9',
-        //     contract_id: 'SJ2024031509',
-        //     contract_start: '1711900800000',
-        //     contract_end: '1743436799000',
-        //     totalCharge: '9930250000000000'
-        //   },
+
         // ]
 
+        let totalSum=users.length
+        let i=0
+      
         // 按照用户生成账单
         for (const item of users) {
-            if(item.sid == null || item.sid == ''){
+            if (item.sid == null || item.sid == '') {
                 continue
             }
 
             // 时间
-            let middle = moment().add(-1, 'months').startOf('months').add(14,'d').format('YYYY-MM-DD')
+            let middle = moment().add(-1, 'months').startOf('months').add(14, 'd').format('YYYY-MM-DD')
             let start = moment().add(-1, 'months').startOf('months').format('x')
             let end = moment().add(-1, 'months').endOf('months').format('x')
 
             if (item.contract_start > start) {
                 start = item.contract_start
             }
-            
+
             if (item.contract_end < end) {
                 end = item.contract_end
             }
-            start= moment(Number(start)).format('YYYY-MM-DD')
-            end= moment(Number(end)).format('YYYY-MM-DD')
+            start = moment(Number(start)).format('YYYY-MM-DD')
+            end = moment(Number(end)).format('YYYY-MM-DD')
 
             // 服务列表
             let serviceList = await user.serviceList(mdb, item.aid, item.order_detail_id)
-
            
             // 用户信息
             let baseInfo = {
                 aid: item.aid,
                 sid: item.sid,
-                order_detail_id: item.order_detail_id, 
-                contract_id:item.contract_id,
+                order_detail_id: item.order_detail_id,
+                contract_id: item.contract_id,
                 start: start,                   //实际统计时间段
                 end: end,                       //实际统计时间段  
-                year: start.substring(0,4),
-                month: start.substring(5,7),
-                middle:middle                   //月中旬统计时间
+                year: start.substring(0, 4),
+                month: start.substring(5, 7),
+                middle: middle                   //月中旬统计时间
             }
 
             // 各个服务明细
-            let productList= await product.allProduct(mdb, serviceList, baseInfo)
+            let productList = await product.allProduct(mdb, serviceList, baseInfo)
 
             // 用户总充值
-            let money_refund= await user.moneyRefund(mdb,baseInfo)
+            let money_refund = await user.moneyRefund(mdb, baseInfo)
 
-            let billArr={
-                consume_sum:'0',
-                money_cycle:'0',
-                money_cycle_gift:'0',
-                money_cycle_official:'0',
-                money_debt:'0',
-                money_refund:money_refund
+            let billArr = {
+                consume_sum: '0',
+                money_cycle: '0',
+                money_cycle_gift: '0',
+                money_cycle_official: '0',
+                money_debt: '0',
+                money_refund: money_refund
             }
 
-            for(const product of productList){
-                billArr.money_cycle_official=new Decimal(billArr.money_cycle_official).add(product.officialPrice).toFixed()
-                billArr.money_cycle_gift=new Decimal(billArr.money_cycle_gift).add(product.giftsAmount).toFixed()
-                billArr.money_cycle=new Decimal(billArr.money_cycle).add(product.realAmount).toFixed()
+            for (const product of productList) {
+                billArr.money_cycle_official = new Decimal(billArr.money_cycle_official).add(product.officialPrice).toFixed()
+                billArr.money_cycle_gift = new Decimal(billArr.money_cycle_gift).add(product.giftsAmount).toFixed()
+                billArr.money_cycle = new Decimal(billArr.money_cycle).add(product.realAmount).toFixed()
             }
 
-            await bill(mdb,billArr,baseInfo)
+            await bill(mdb, billArr, baseInfo)
+            
+            i++
+            console.log(`进度：${i}/${totalSum}。用户ID:${item.aid},用户合同：${item.contract_id}`);
         }
 
     } catch (error) {

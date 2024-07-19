@@ -148,7 +148,7 @@ async function child(db, list, baseInfo) {
 // 写入month_bill
 async function bill(db, list, baseInfo) {
     try {
-        let sql1 = `select id from month_bill_shua where account_id=${baseInfo.aid} and contract_id='${baseInfo.contract_id}' and order_id='${baseInfo.order_detail_id}' and year='${baseInfo.year}' and month='${baseInfo.month}' `
+        let sql1 = `select id from month_bill where account_id=${baseInfo.aid} and contract_id='${baseInfo.contract_id}' and order_id='${baseInfo.order_detail_id}' and year='${baseInfo.year}' and month='${baseInfo.month}' `
         let res = await db.query(sql1)
         res = res[0]
 
@@ -192,7 +192,7 @@ async function bill(db, list, baseInfo) {
             totalMoney = totalMoney[0][0].totalMoney
             list.consume_sum = new Decimal(totalMoney).add(list.money_cycle).toFixed()
             list.money_debt = new Decimal(totalMoney).sub(list.money_refund).toFixed()
-            let sql3 = `insert into month_bill_shua (year,month,bill_time,create_at,true_start,true_end,contract_id,order_id,account_id,consume_sum,money_cycle,money_cycle_gift,money_cycle_official,money_refund,money_debt,ack_type,inform_type,inform_msg)
+            let sql3 = `insert into month_bill (year,month,bill_time,create_at,true_start,true_end,contract_id,order_id,account_id,consume_sum,money_cycle,money_cycle_gift,money_cycle_official,money_refund,money_debt,ack_type,inform_type,inform_msg)
             values
             ('${baseInfo.year}','${baseInfo.month}','${baseInfo.middle}','${moment().format('YYYY-MM-DD HH:mm:ss')}','${baseInfo.start}','${baseInfo.end}','${baseInfo.contract_id}','${baseInfo.order_detail_id}',${baseInfo.aid},${list.consume_sum},${list.money_cycle},${list.money_cycle_gift},${list.money_cycle_official},${list.money_refund},${list.money_debt},'出账中',${inform_type},'${inform_msg.join(',')}')
             `
