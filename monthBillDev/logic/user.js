@@ -9,7 +9,7 @@ async function users(db) {
         let sql1 = `select account_id,order_detail_id from contract_detail where is_deleted=0 group by account_id,order_detail_id`
         let res = await db.query(sql1)
         res = res[0]
-       
+
         let list = []
         for (let i = 0; i < res.length; i++) {
             let sql = `SELECT contract_id,contract_start,contract_end FROM contract where account_id=${res[i].account_id} and order_detail_id='${res[i].order_detail_id}' and account_id !=0 and contract_end > ${lastMonth}`
@@ -30,7 +30,7 @@ async function users(db) {
             let sql1 = `select IFNULL(sum(amount),0) as total from api_recharged where contract_id='${item.contract_id}' and account_id = ${item.aid} and is_deleted=0 and type in (1,2,3,6)`
             let sql2 = `select IFNULL(sum(balance),0) as total from bill_supplement where contract_id='${item.contract_id}' and account_id =${item.aid}`
             let sql3 = `select sjpt_account_id from account where account_id=${item.aid}`
-            
+
             await Promise.all([
                 db.query(sql1),
                 db.query(sql2),
@@ -50,7 +50,7 @@ async function users(db) {
 
 async function serviceList(db, account_id, order_id) {
     try {
-        let sql = `SELECT service_class -> '$.label' as serviceName FROM contract_detail where account_id=${account_id} and order_detail_id='${order_id}'`
+        let sql = `SELECT service_class -> '$.label' as serviceName FROM contract_detail where account_id=${account_id} and order_detail_id='${order_id}' and is_deleted=0`
         let res = await db.query(sql)
         res = res[0]
         let serviceNames = map(res, 'serviceName')
@@ -94,6 +94,12 @@ async function serviceList(db, account_id, order_id) {
                     break;
                 case '舆情秘书统计分析API':
                     value = 'yqmsAnalyse';
+                    break;
+                case '多模态API服务':
+                    value = 'modal';
+                    break;
+                case '话题刷新':
+                    value = 'null';
                     break;
             }
             serviceList.push({ serviceName: item, functionName: value, list: {} })

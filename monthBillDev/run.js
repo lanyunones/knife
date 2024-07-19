@@ -33,13 +33,23 @@ let run = async function () {
             users = await user.users(mdb)
             await rds.set('dowding:billUser', JSON.stringify(users), 'EX', 86400)
         }
-        // users = [
+        users = [
+            {
+                "aid": 9001967,
+                "order_detail_id": "58bc4dc07314c2ef",
+                "contract_id": "SJ2023122626",
+                "contract_start": "1710864000000",
+                "contract_end": "1735055999000",
+                "totalCharge": "1209558000000000",
+                "sid": 3703039892180001
+            }
 
-        // ]
 
-        let totalSum=users.length
-        let i=0
-      
+        ]
+
+        let totalSum = users.length
+        let i = 0
+
         // 按照用户生成账单
         for (const item of users) {
             if (item.sid == null || item.sid == '') {
@@ -63,7 +73,8 @@ let run = async function () {
 
             // 服务列表
             let serviceList = await user.serviceList(mdb, item.aid, item.order_detail_id)
-           
+
+
             // 用户信息
             let baseInfo = {
                 aid: item.aid,
@@ -99,7 +110,7 @@ let run = async function () {
             }
 
             await bill(mdb, billArr, baseInfo)
-            
+
             i++
             console.log(`进度：${i}/${totalSum}。用户ID:${item.aid},用户合同：${item.contract_id}`);
         }
