@@ -43,8 +43,6 @@ let run = async function () {
                 "totalCharge": "1209558000000000",
                 "sid": 3703039892180001
             }
-
-
         ]
 
         let totalSum = users.length
