@@ -604,7 +604,7 @@ const fucntionClass = {
             realFactor: '1',
         }
         try {
-            let factor = await this.factor(db, baseInfo, '/api-dev/v3/spread/sync/interact', 175, 'club')
+            let factor = await this.factor(db, baseInfo, '/api-dev/v3/spread/sync/interact', 175, 'netease')
             let sql1 = `
             SELECT
             (select IFNULL(sum(times),0) from bill_interact where domain='netease' and uid='${baseInfo.aid}' and contract_id='${baseInfo.contract_id}' and stime between '${baseInfo.start}' and '${baseInfo.end}' and supplement=1) 
@@ -788,7 +788,7 @@ const fucntionClass = {
             realFactor: '1',
         }
         try {
-            let factor = await this.factor(db, baseInfo, '/api-dev/v3/spread/sync/interact', 213, 'ucnews')
+            let factor = await this.factor(db, baseInfo, '/api-dev/v3/spread/sync/interact', 213, 'blackcat')
             let sql1 = `
             SELECT
             (select IFNULL(sum(times),0) from bill_interact where domain='blackcat' and uid='${baseInfo.aid}' and contract_id='${baseInfo.contract_id}' and stime between '${baseInfo.start}' and '${baseInfo.end}' and supplement=1) 
@@ -1159,15 +1159,15 @@ const fucntionClass = {
             let factor = await this.factor(db, baseInfo, '/api-dev/v3/spread/sync/interact', 231, 'xiaohongshuPrecise')
             let sql1 = `
             SELECT
-            (select IFNULL(sum(times),0) from bill_interact where domain='xiaohongshuPrecise' and uid='${baseInfo.aid}' and contract_id='${baseInfo.contract_id}' and stime between '${baseInfo.start}' and '${baseInfo.end}' and supplement=1) 
+            (select IFNULL(sum(times),0) from bill_interact where domain='xiaohongshu-precise' and uid='${baseInfo.aid}' and contract_id='${baseInfo.contract_id}' and stime between '${baseInfo.start}' and '${baseInfo.end}' and supplement=1) 
             +
-            (select IFNULL(sum(times),0) from bill_interact_sjpt where domain in ('xiaohongshu.com') and uid='${baseInfo.sid}' and stime between '${baseInfo.start}' and '${baseInfo.end}' and supplement=1) as total
+            (select IFNULL(sum(times),0) from bill_interact_sjpt where domain in ('xiaohongshuPrecise.com') and uid='${baseInfo.sid}' and stime between '${baseInfo.start}' and '${baseInfo.end}' and supplement=1) as total
            `
             let sql2 = `
            SELECT
-           (select IFNULL(sum(times),0) from bill_interact where domain='xiaohongshuPrecise' and uid='${baseInfo.aid}' and contract_id='${baseInfo.contract_id}' and stime between '${baseInfo.start}' and '${baseInfo.end}' and supplement=2) 
+           (select IFNULL(sum(times),0) from bill_interact where domain='xiaohongshu-precise' and uid='${baseInfo.aid}' and contract_id='${baseInfo.contract_id}' and stime between '${baseInfo.start}' and '${baseInfo.end}' and supplement=2) 
            +
-           (select IFNULL(sum(times),0) from bill_interact_sjpt where domain in ('xiaohongshu.com') and uid='${baseInfo.sid}' and stime between '${baseInfo.start}' and '${baseInfo.end}' and supplement=2) as total
+           (select IFNULL(sum(times),0) from bill_interact_sjpt where domain in ('xiaohongshuPrecise.com') and uid='${baseInfo.sid}' and stime between '${baseInfo.start}' and '${baseInfo.end}' and supplement=2) as total
           `
             await Promise.all([
                 db.query(sql1),
