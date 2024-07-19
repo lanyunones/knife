@@ -126,13 +126,14 @@ const fucntionClass = {
             SELECT
              (select IFNULL(sum(total),0) from bill_zx_flag where sjpt_uid='${baseInfo.sid}' and stime between '${baseInfo.start}' and '${baseInfo.end}' and supplement=1) 
              +
-             (select IFNULL(sum(total),0) from bill_xvs_search where name='/v1/search' and uid=${baseInfo.sid} and stime between '${baseInfo.start}' and '${baseInfo.end}' and supplement=1) as total
+             (select IFNULL(sum(charge_deduct_size),0) from bill_xvs_search where name='/v1/search' and uid=${baseInfo.sid} and stime between '${baseInfo.start}' and '${baseInfo.end}' and supplement=1) as total
             `
+
             let sql2 = `
             SELECT
              (select IFNULL(sum(total),0) from bill_zx_flag where sjpt_uid='${baseInfo.sid}' and stime between '${baseInfo.start}' and '${baseInfo.end}' and supplement=2) 
              +
-             (select IFNULL(sum(total),0) from bill_xvs_search where name='/v1/search' and uid=${baseInfo.sid} and stime between '${baseInfo.start}' and '${baseInfo.end}' and supplement=2) as total
+             (select IFNULL(sum(charge_deduct_size),0) from bill_xvs_search where name='/v1/search' and uid=${baseInfo.sid} and stime between '${baseInfo.start}' and '${baseInfo.end}' and supplement=2) as total
             `
 
             await Promise.all([
@@ -563,7 +564,7 @@ const fucntionClass = {
                 from
                     bill_subscribe
                 where
-                    name='search' and uid=${baseInfo.aid} and contract_id='${baseInfo.contract_id}' and stime between '${baseInfo.start}' and '${baseInfo.end}' and supplement=1
+                    uid=${baseInfo.aid} and contract_id='${baseInfo.contract_id}' and stime between '${baseInfo.start}' and '${baseInfo.end}' and supplement=1
             `
             let sql2 = `
                 SELECT 
@@ -571,7 +572,7 @@ const fucntionClass = {
                 from
                     bill_subscribe
                 where
-                    name='search' and uid=${baseInfo.aid} and contract_id='${baseInfo.contract_id}' and stime between '${baseInfo.start}' and '${baseInfo.end}' and supplement=2
+                    uid=${baseInfo.aid} and contract_id='${baseInfo.contract_id}' and stime between '${baseInfo.start}' and '${baseInfo.end}' and supplement=2
             `
             await Promise.all([
                 db.query(sql1),
