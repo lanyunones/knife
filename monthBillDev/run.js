@@ -27,14 +27,12 @@ let run = async function () {
     try {
 
         let users = await rds.get('dowding:billUser')
-
         if (users != null && users != '') {
             users = JSON.parse(users)
         } else {
             users = await user.users(mdb)
             await rds.set('dowding:billUser', JSON.stringify(users), 'EX', 86400)
         }
-
         // users = [
 
         // ]

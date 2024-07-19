@@ -6,10 +6,10 @@ const moment = require('moment');
 async function users(db) {
     let lastMonth = moment().add(-1, 'months').startOf('months').format('x')
     try {
-        let sql1 = `select account_id,order_detail_id from contract_detail where is_deleted=0 group by order_detail_id`
+        let sql1 = `select account_id,order_detail_id from contract_detail where is_deleted=0 group by account_id,order_detail_id`
         let res = await db.query(sql1)
         res = res[0]
-
+       
         let list = []
         for (let i = 0; i < res.length; i++) {
             let sql = `SELECT contract_id,contract_start,contract_end FROM contract where account_id=${res[i].account_id} and order_detail_id='${res[i].order_detail_id}' and account_id !=0 and contract_end > ${lastMonth}`
@@ -46,49 +46,6 @@ async function users(db) {
         return []
     }
 }
-
-async function usersAll(db) {
-    try {
-        let sql1 = `select account_id,order_detail_id from contract_detail where is_deleted=0 group by order_detail_id`
-        let res = await db.query(sql1)
-        res = res[0]
-
-        let list = []
-        for (let i = 0; i < res.length; i++) {
-            let sql = `SELECT contract_id,contract_start,contract_end FROM contract where account_id=${res[i].account_id} and order_detail_id='${res[i].order_detail_id}' and account_id !=0`
-            let r = await db.query(sql)
-            r = r[0]
-            if (r.length > 0) {
-                list.push({
-                    aid: res[i].account_id,
-                    order_detail_id: res[i].order_detail_id,
-                    contract_id: r[0].contract_id,
-                    contract_start: r[0].contract_start,
-                    contract_end: r[0].contract_end
-                })
-            }
-        }
-
-        for (let item of list) {
-            let sql1 = `select IFNULL(sum(amount),0) as total from api_recharged where contract_id='${item.contract_id}' and account_id = ${item.aid} and is_deleted=0 and type in (1,2,3,6)`
-            let sql2 = `select IFNULL(sum(balance),0) as total from bill_supplement where contract_id='${item.contract_id}' and account_id =${item.aid}`
-            let sql3 = `select sjpt_account_id from account where account_id=${item.aid}`
-            await Promise.all([
-                db.query(sql1),
-                db.query(sql2),
-                db.query(sql3)
-            ]).then(r => {
-                item.totalCharge = new Decimal(r[0][0][0].total).add(r[1][0][0].total).toFixed()
-                item.sid = r[2][0][0].sjpt_account_id
-            })
-        }
-
-        return list
-    } catch (error) {
-        return []
-    }
-}
-
 
 
 async function serviceList(db, account_id, order_id) {
