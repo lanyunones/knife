@@ -110,7 +110,7 @@ let run = async function () {
             await bill(mdb, billArr, baseInfo)
 
             i++
-            console.log(`账单生成月份：${baseInfo.month}，进度：${i}/${totalSum}，用户ID:${item.aid}，用户合同：${item.contract_id}`);
+            console.log(`账单月份：${baseInfo.month}，进度：${i}/${totalSum}，用户ID:${item.aid}，用户合同：${item.contract_id}`);
         }
 
     } catch (error) {
