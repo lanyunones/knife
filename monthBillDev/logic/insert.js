@@ -191,7 +191,7 @@ async function bill(db, list, baseInfo) {
             let totalMoney = await db.query(sql2)
             totalMoney = totalMoney[0][0].totalMoney
             list.consume_sum = new Decimal(totalMoney).add(list.money_cycle).toFixed()
-            list.money_debt = new Decimal(totalMoney).sub(list.money_refund).toFixed()
+            list.money_debt = new Decimal(list.consume_sum).sub(list.money_refund).toFixed()
             let sql3 = `insert into month_bill (year,month,bill_time,create_at,true_start,true_end,contract_id,order_id,account_id,consume_sum,money_cycle,money_cycle_gift,money_cycle_official,money_refund,money_debt,ack_type,inform_type,inform_msg)
             values
             ('${baseInfo.year}','${baseInfo.month}','${baseInfo.middle}','${moment().format('YYYY-MM-DD HH:mm:ss')}','${baseInfo.start}','${baseInfo.end}','${baseInfo.contract_id}','${baseInfo.order_detail_id}',${baseInfo.aid},${list.consume_sum},${list.money_cycle},${list.money_cycle_gift},${list.money_cycle_official},${list.money_refund},${list.money_debt},'出账中',${inform_type},'${inform_msg.join(',')}')
