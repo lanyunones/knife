@@ -48,6 +48,9 @@ let run = async function () {
         let totalSum = users.length
         let i = 0
 
+        let q=-1
+
+
         // 按照用户生成账单
         for (const item of users) {
             if (item.sid == null || item.sid == '') {
@@ -55,9 +58,9 @@ let run = async function () {
             }
 
             // 时间
-            let middle = moment().add(-1, 'months').startOf('months').add(14, 'd').format('YYYY-MM-DD')
-            let start = moment().add(-1, 'months').startOf('months').format('x')
-            let end = moment().add(-1, 'months').endOf('months').format('x')
+            let middle = moment().add(q, 'months').startOf('months').add(14, 'd').format('YYYY-MM-DD')
+            let start = moment().add(q, 'months').startOf('months').format('x')
+            let end = moment().add(q, 'months').endOf('months').format('x')
 
             if (item.contract_start > start) {
                 start = item.contract_start
