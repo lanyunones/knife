@@ -195,7 +195,7 @@ const fucntionClass = {
             SELECT
             (select IFNULL(sum(times),0) from bill_interact where domain='kuaishou' and uid='${baseInfo.aid}' and contract_id='${baseInfo.contract_id}' and stime between '${baseInfo.start}' and '${baseInfo.end}' and supplement=1) 
             +
-            (select IFNULL(sum(times),0) from bill_interact_sjpt where domain in ('iesdouyin.com','douyin.com') and uid='${baseInfo.sid}' and stime between '${baseInfo.start}' and '${baseInfo.end}' and supplement=1) as total
+            (select IFNULL(sum(times),0) from bill_interact_sjpt where domain in ('kuaishou.com','live.kuaishou.com') and uid='${baseInfo.sid}' and stime between '${baseInfo.start}' and '${baseInfo.end}' and supplement=1) as total
            `
             let sql2 = `
            SELECT
