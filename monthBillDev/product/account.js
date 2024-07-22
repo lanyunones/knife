@@ -533,6 +533,44 @@ const fucntionClass = {
         } catch (error) {
             return list
         }
+    },
+    async kuaishou(db, baseInfo) {
+        let list = {
+            serviceName: "账号刷新",             //一级服务
+            serviceType: "快手",                 //二级服务
+            dataNumber: '0',                     //数据量或者调用次数
+            dataGiftNumber:'0',                  // 抹零        
+            officialPrice: "0",                  //官方价
+            discountAmount: "0",                 //优惠价
+            giftsAmount: "0",                    //抹零价
+            realAmount: "0",                     //应付价
+            standardFactor:'1',
+            realFactor:'1',
+
+        }
+        try {
+            let factor = await this.factor(db, baseInfo, '/api-dev/v3/spread/sync/account', 250, 'kuaishou')
+            let sql1 = `select IFNULL(sum(times),0) as total from bill_account where domain='kuaishou' and uid=${baseInfo.aid} and contract_id='${baseInfo.contract_id}' and stime between '${baseInfo.start}' and '${baseInfo.end}' and supplement=1`
+            let sql2 = `select IFNULL(sum(times),0) as total from bill_account where domain='kuaishou' and uid=${baseInfo.aid} and contract_id='${baseInfo.contract_id}' and stime between '${baseInfo.start}' and '${baseInfo.end}' and supplement=2`
+            await Promise.all([
+                db.query(sql1),
+                db.query(sql2)
+            ]).then(res => {
+                let total = new Decimal(res[0][0][0].total).add(res[1][0][0].total).toFixed()
+                list.dataNumber = total
+                list.dataGiftNumber = res[1][0][0].total
+                list.officialPrice = new Decimal(total).mul(new Decimal(factor.standardFactor)).toFixed()
+                list.discountAmount = new Decimal(total).mul(new Decimal(factor.realFactor)).toFixed()
+                list.giftsAmount = new Decimal(res[1][0][0].total).mul(new Decimal(factor.realFactor)).toFixed()
+                list.realAmount = new Decimal(res[0][0][0].total).mul(new Decimal(factor.realFactor)).toFixed()
+                list.standardFactor=factor.standardFactor
+                list.realFactor=factor.realFactor
+
+            })
+            return list
+        } catch (error) {
+            return list
+        }
     }
 }
 
