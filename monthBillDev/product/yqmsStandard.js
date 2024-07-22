@@ -33,7 +33,7 @@ const fucntionClass = {
             let standardFactor = await db.query(sql)
             standardFactor = new Decimal(standardFactor[0][0].factor).mul(new Decimal(10).pow(10)).toFixed()
             // 实际系数
-            let realFactor = await factorReal.real(baseInfo.aid, baseInfo.contract_id, serviceUrl, source)
+            let realFactor = await factorReal.real(baseInfo.aid, baseInfo.contract_id, serviceUrl)
             return { standardFactor: standardFactor, realFactor: realFactor.realFactor }
         } catch (error) {
             return { standardFactor: '100000000', realFactor: '100000000' }
