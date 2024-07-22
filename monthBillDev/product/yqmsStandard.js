@@ -114,7 +114,7 @@ const fucntionClass = {
     async warningInfos(db, baseInfo) {
         let list = {
             serviceName: "舆情秘书标准数据API服务", //一级服务
-            serviceType: "专题信息列表",               //二级服务
+            serviceType: "预警信息列表",               //二级服务
             dataNumber: '0',                       //数据量或者调用次数
             dataGiftNumber: '0',                   // 抹零        
             officialPrice: "0",                    //官方价
