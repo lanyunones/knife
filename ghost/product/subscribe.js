@@ -11,11 +11,11 @@ async function subscribe(adb, contractId, uid, hashKey, env) {
     res = res[0]
     let dataSize = get(res, "[0]['dataSize']", 0)
     let factor = get(res, "[0]['factor']", null)
-
     if (dataSize == 0 || factor == null) {
         return false
     } else {
         let esResDataSize = await esResult(adb, uid, hashKey)
+        esResDataSize=esResDataSize ==null ?0:esResDataSize
         let dataGroup = new Decimal(dataSize).add(esResDataSize).toFixed()
         let totalGroup = new Decimal(dataGroup).mul(factor).toFixed()
         return {
@@ -30,7 +30,6 @@ async function subscribe(adb, contractId, uid, hashKey, env) {
 
 // 公共es 结果集
 async function esResult(adb, uid, hashKey) {
-
     let r = "dowding:apisix:apiV2:contract:limit:daySize:" + uid + ":" + "subscribe" + ":" + Number(moment(new Date()).format("YYYYMMDD")) + ":" + hashKey
     return await adb.rdb.get(r)
 
