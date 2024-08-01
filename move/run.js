@@ -25,15 +25,13 @@ let run = async function () {
     let sdb = mysql.createPool(conf.mysql.sjpt)
     sdb = sdb.promise()
 
-
     try {
-        let timeArr = betweenDates('2022-03-02', '2022-12-31', 'YYYY-MM-DD')
 
+        let timeArr = betweenDates('2024-07-18', '2024-07-30', 'YYYY-MM-DD')
         for (const time of timeArr) {
             let sql = `select * from bill_xvs_search where stime='${time}'`
             let res = await db.query(sql)
             let list = res[0]
-
             for (const item of list) {
                 let sql = `select account_id from account where sjpt_account_id=${item.uid} limit 1 `
                 let account = await db.query(sql)
@@ -42,12 +40,13 @@ let run = async function () {
                     continue
                 }
                 aid = account[0]?.account_id
-
-                let sql2 =`select contract_id from contract where account_id=${aid} limit 1`
+                let sql2 =`select contract_id from contract where account_id=${aid} and contract_start <= '${moment(item.stime).format('x')}' and contract_end >= '${moment(item.stime).format('x')}' limit 1`
                 let contract = await db.query(sql2)
                 contract=contract[0]
+                if (contract.length == 0) {
+                    continue
+                }
                 let contract_id=contract[0]?.contract_id ?? ''
-
                 let name=''
                 let url=''
                 switch (item.name) {
@@ -85,29 +84,16 @@ let run = async function () {
                     "charge_deduct_text_number":new Decimal(item.charge_deduct_size).mul(factor).toNumber(),
                     "times":item.times,
                 }
-
-               
-
-
-                let sql3 = `insert into bill_search (stime,uid,charge_deduct_number,charge_deduct_size,name,contract_id,text_size,charge_deduct_text_number,times)
+                let sql3 = `insert into bill_search_m (stime,uid,charge_deduct_number,charge_deduct_size,name,contract_id,text_size,charge_deduct_text_number,times)
                     values
                     ('${insert.stime}',${insert.uid},${insert.charge_deduct_number},${insert.charge_deduct_size},'${insert.name}','${insert.contract_id}',${insert.text_size},${insert.charge_deduct_text_number},${insert.times})
                 `
-
-                console.log(insert);
-                console.log(sql3);
-                return
+                await db.query(sql3)
             }
-
-            return
+            console.log(time);
         }
-
-
-
-
     } catch (error) {
         console.log(error);
-        throw new Error('运行异常' + error)
     } finally {
         process.exit(0);  //运行结束
     }
