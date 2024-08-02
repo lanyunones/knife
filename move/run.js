@@ -27,7 +27,7 @@ let run = async function () {
 
     try {
 
-        let timeArr = betweenDates('2024-07-18', '2024-07-30', 'YYYY-MM-DD')
+        let timeArr = betweenDates('2024-07-31', '2024-08-01', 'YYYY-MM-DD')
         for (const time of timeArr) {
             let sql = `select * from bill_xvs_search where stime='${time}'`
             let res = await db.query(sql)
@@ -59,7 +59,7 @@ let run = async function () {
                         url='/api/v3/vsearch'
                         break
                     case '/v1/search':
-                        name = 'v1search'
+                        name = 'zxV1search'
                         url='/api/v3/v1/search'
                         break
                     case '/sliceSearch':
@@ -83,7 +83,7 @@ let run = async function () {
                     "charge_deduct_text_number":new Decimal(item.charge_deduct_size).mul(factor).toNumber(),
                     "times":item.times,
                 }
-                let sql3 = `insert into bill_search_m (stime,uid,charge_deduct_number,charge_deduct_size,name,contract_id,text_size,charge_deduct_text_number,times)
+                let sql3 = `insert into bill_search (stime,uid,charge_deduct_number,charge_deduct_size,name,contract_id,text_size,charge_deduct_text_number,times)
                     values
                     ('${insert.stime}',${insert.uid},${insert.charge_deduct_number},${insert.charge_deduct_size},'${insert.name}','${insert.contract_id}',${insert.text_size},${insert.charge_deduct_text_number},${insert.times})
                 `
