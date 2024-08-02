@@ -32,10 +32,10 @@ async function overview(db, contractId, uid, env) {
         [productList.consult, productList.canvas, productList.canvasYears, productList.comment, productList.interact, productList.account, productList.index, productList.video, productList.hot, productList.yqms] = res
     })
 
-    let box={}
+    let box = {}
     for (const i in productList) {
-        if(productList[i]){
-            box[i]=productList[i]
+        if (productList[i]) {
+            box[i] = productList[i]
         }
     }
     return box
@@ -146,7 +146,7 @@ async function publicEs(contractId, uid, env, urls) {
 
 // 搜索
 async function consult(db, contractId, uid, env) {
-    let mysqlRes = await publicResult("bill_search", db, contractId, uid)
+    let mysqlRes = await publicResult("bill_search", db, contractId, uid, ["name in ('search','total','kafka')"])
     let urls = ["/api/v3/consult/search", "/api/v3/consult/total", "/api/v3/kafka/task"]
     let esRes = await publicEs(contractId, uid, env, urls)
     let onceGroup = new Decimal(mysqlRes.onceGroup).add(esRes.onceGroup).toFixed()
