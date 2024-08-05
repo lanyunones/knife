@@ -8,7 +8,7 @@ const { betweenDates } = require('../common/time.js')
 const factorReal = require('./logic/factorReal.js')
 
 /**
- * bill_xvs_search 迁移 bill_search
+ *  数据平台账号Xsearch 历史数据迁移
  */
 let run = async function () {
 
@@ -29,14 +29,14 @@ let run = async function () {
 
         let timeArr = betweenDates('2023-09-10', '2024-08-02', 'YYYYMMDD')
         for (const time of timeArr) {
-            let sql = `SELECT sum(total_amount) as total,info_flag FROM sys_interface_status_es where token='ce32aaa7-6f19-4317-9b7e-a755697d2b3d' and ct ='${time}' and info_flag in ('0101','0105','0109','02','03','04','06','07','11') GROUP BY info_flag`
+            let sql = `SELECT sum(total_amount) as total,info_flag FROM sys_interface_status_es where token='ce32aaa7-6f19-4317-9b7e-a755697d2b3d' and ct ='${time}' and info_flag in ('0101','0105','0109','02','03','04','0411','06','07','11','17','21') GROUP BY info_flag`
             let res = await sdb.query(sql)
             let list = res[0]
             if(list.length ==0){
                 continue
             }
             
-            let sql2 = `SELECT sum(total_amount) as total,info_flag FROM sys_interface_status_es where token='ce32aaa7-6f19-4317-9b7e-a755697d2b3d' and ct ='${time}' and info_flag in ('0101','0105','0109','02','03','04','06','07','11')`
+            let sql2 = `SELECT sum(total_amount) as total,info_flag FROM sys_interface_status_es where token='ce32aaa7-6f19-4317-9b7e-a755697d2b3d' and ct ='${time}' and info_flag in ('0101','0105','0109','02','03','04','0411','06','07','11','17','21')`
             let res2 = await sdb.query(sql2)
             let total=res2[0][0].total
 
