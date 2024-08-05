@@ -32,7 +32,7 @@ let run = async function () {
 
     try {
         //redis所有用户
-        let redisUsers = await rds.keys(`dowding:apisix:apiV2:contract:balance:*`)
+        let redisUsers = await rds.keys(`dowding:apisix:apiV2:contract:balance:9021144`)
 
         if (redisUsers.length == 0) {
             console.log(`redis没用该用户`);

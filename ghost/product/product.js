@@ -146,7 +146,14 @@ async function publicEs(contractId, uid, env, urls) {
 
 // 搜索
 async function consult(db, contractId, uid, env) {
-    let mysqlRes = await publicResult("bill_search", db, contractId, uid, ["name in ('search','total','kafka')"])
+    xsearchUser=['9021144']
+    let where=[]
+    if(xsearchUser.indexOf(String(uid)) !=-1){
+        where=["name in ('search','total','kafka','xsearch')"]
+    }else{
+        where=["name in ('search','total','kafka')"]
+    }
+    let mysqlRes = await publicResult("bill_search", db, contractId, uid, where)
     let urls = ["/api/v3/consult/search", "/api/v3/consult/total", "/api/v3/kafka/task"]
     let esRes = await publicEs(contractId, uid, env, urls)
     let onceGroup = new Decimal(mysqlRes.onceGroup).add(esRes.onceGroup).toFixed()
