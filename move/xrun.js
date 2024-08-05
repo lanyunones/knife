@@ -26,23 +26,24 @@ let run = async function () {
     sdb = sdb.promise()
 
     try {
-        let suid = 3072952105879552
-        let uid = 9019197
-        let contract_id = 'SJ2022111101'
-        let factor =new Decimal(new Decimal(10).pow(10)).mul('0.02').toFixed()
+        let suid = 3302463558033408
+        let uid = 9020426
+        let contract_id = 'SJ2023091918'
+        let factor =new Decimal(new Decimal(10).pow(10)).mul('0.024').toFixed()
         let token = await sdb.query(`select * from sys_user_info where user_id=${suid}`)
         token = token[0][0]?.token
+      
 
-        let timeArr = betweenDates('2022-12-16', '2023-10-30', 'YYYYMMDD')
+        let timeArr = betweenDates('2023-05-25', '2024-07-25', 'YYYYMMDD')
         for (const time of timeArr) {
-            let sql = `SELECT sum(total_amount) as total,info_flag FROM sys_interface_status_es where token='${token}' and ct ='${time}' and info_flag in ('0101','0105','0109','02','03','04','06','07','11','17','21') GROUP BY info_flag`
+            let sql = `SELECT sum(total_amount) as total,info_flag FROM sys_interface_status_es where interface_name='/xsearch' and token='${token}' and ct ='${time}' and info_flag in ('0101','0105','0109','02','03','04','06','07','11','17','21') GROUP BY info_flag`
             let res = await sdb.query(sql)
             let list = res[0]
             if (list.length == 0) {
                 continue
             }
 
-            let sql2 = `SELECT sum(total_amount) as total,info_flag FROM sys_interface_status_es where token='${token}' and ct ='${time}' and info_flag in ('0101','0105','0109','02','03','04','06','07','11','17','21')`
+            let sql2 = `SELECT sum(total_amount) as total,info_flag FROM sys_interface_status_es where interface_name='/xsearch' and token='${token}' and ct ='${time}' and info_flag in ('0101','0105','0109','02','03','04','06','07','11','17','21')`
             let res2 = await sdb.query(sql2)
             let total = res2[0][0].total
 
