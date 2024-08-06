@@ -32,22 +32,18 @@ let run = async function () {
         let factor =new Decimal(new Decimal(10).pow(10)).mul('0.024').toFixed()
         let token = await sdb.query(`select * from sys_user_info where user_id=${suid}`)
         token = token[0][0]?.token
-      
 
         let timeArr = betweenDates('2023-05-25', '2024-07-25', 'YYYYMMDD')
         for (const time of timeArr) {
-            let sql = `SELECT sum(total_amount) as total,info_flag FROM sys_interface_status_es where interface_name='/xsearch' and token='${token}' and ct ='${time}' and info_flag in ('0101','0105','0109','02','03','04','06','07','11','17','21') GROUP BY info_flag`
+            let sql = `SELECT sum(total_amount) as total,info_flag FROM sys_interface_status_es where interface_name='/xsearch' and token='${token}' and ct ='${time}' and info_flag in ('0101','0105','0109','02','03','04','0411','06','07','11','17','21','1201','1202','1301','1302') GROUP BY info_flag`
             let res = await sdb.query(sql)
             let list = res[0]
             if (list.length == 0) {
                 continue
             }
-
-            let sql2 = `SELECT sum(total_amount) as total,info_flag FROM sys_interface_status_es where interface_name='/xsearch' and token='${token}' and ct ='${time}' and info_flag in ('0101','0105','0109','02','03','04','06','07','11','17','21')`
+            let sql2 = `SELECT sum(total_amount) as total,info_flag FROM sys_interface_status_es where interface_name='/xsearch' and token='${token}' and ct ='${time}' and info_flag in ('0101','0105','0109','02','03','04','0411','06','07','11','17','21','1201','1202','1301','1302')`
             let res2 = await sdb.query(sql2)
             let total = res2[0][0].total
-
-
 
             let timestr = moment(time).format('YYYY-MM-DD')
 
@@ -69,7 +65,6 @@ let run = async function () {
             ('${timestr}',${uid},${cnumber},${total},1,'xsearch','${contract_id}',${total},${cnumber})
             `
             await db.query(sqlS)
-
             console.log(timestr);
         }
     } catch (error) {

@@ -146,7 +146,7 @@ async function publicEs(contractId, uid, env, urls) {
 
 // 搜索
 async function consult(db, contractId, uid, env) {
-    xsearchUser=['9021144']
+    xsearchUser=['9021144','9020426']
     let where=[]
     if(xsearchUser.indexOf(String(uid)) !=-1){
         where=["name in ('search','total','kafka','xsearch')"]
