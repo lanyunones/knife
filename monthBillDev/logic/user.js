@@ -47,6 +47,49 @@ async function users(db) {
     }
 }
 
+async function aim(db,uid) {
+    let lastMonth = moment().add(-1, 'months').startOf('months').format('x')
+    try {
+        let sql1 = `select account_id,order_detail_id from contract_detail where account_id=${uid} and is_deleted=0 group by account_id,order_detail_id`
+        let res = await db.query(sql1)
+        res = res[0]
+
+        let list = []
+        for (let i = 0; i < res.length; i++) {
+            let sql = `SELECT contract_id,contract_start,contract_end FROM contract where account_id=${res[i].account_id} and order_detail_id='${res[i].order_detail_id}' and account_id !=0 and contract_end > ${lastMonth}`
+            let r = await db.query(sql)
+            r = r[0]
+            if (r.length > 0) {
+                list.push({
+                    aid: res[i].account_id,
+                    order_detail_id: res[i].order_detail_id,
+                    contract_id: r[0].contract_id,
+                    contract_start: r[0].contract_start,
+                    contract_end: r[0].contract_end
+                })
+            }
+        }
+
+        for (let item of list) {
+            let sql1 = `select IFNULL(sum(amount),0) as total from api_recharged where contract_id='${item.contract_id}' and account_id = ${item.aid} and is_deleted=0 and type in (1,2,3,6)`
+            let sql2 = `select IFNULL(sum(balance),0) as total from bill_supplement where contract_id='${item.contract_id}' and account_id =${item.aid}`
+            let sql3 = `select sjpt_account_id from account where account_id=${item.aid}`
+            await Promise.all([
+                db.query(sql1),
+                db.query(sql2),
+                db.query(sql3)
+            ]).then(r => {
+                item.totalCharge = new Decimal(r[0][0][0].total).add(r[1][0][0].total).toFixed()
+                item.sid = r[2][0][0]?.sjpt_account_id
+            })
+        }
+
+        return list
+    } catch (error) {
+        return []
+    }
+}
+
 
 async function serviceList(db, account_id, order_id) {
     try {
@@ -113,8 +156,8 @@ async function serviceList(db, account_id, order_id) {
 // 用户合同总充值
 async function moneyRefund(db, baseInfo) {
     try {
-        let sql1 = `select IFNULL(SUM(amount),0) as total from api_recharged where contract_id='${baseInfo.contract_id}' and account_id = ${baseInfo.aid} and is_deleted=0 and type in (1,2,3,6)`
-        let sql2 = `select IFNULL(SUM(balance),0) as total from bill_supplement where contract_id='${baseInfo.contract_id}' and account_id = ${baseInfo.aid} and order_detail_id= '${baseInfo.order_detail_id}'`
+        let sql1 = `select IFNULL(SUM(amount),0) as total from api_recharged where contract_id='${baseInfo.contract_id}' and account_id = ${baseInfo.aid} and is_deleted=0 and type in (1,2,3,6) and operate_time <= '${baseInfo.end} 23:59:59'`
+        let sql2 = `select IFNULL(SUM(balance),0) as total from bill_supplement where contract_id='${baseInfo.contract_id}' and account_id = ${baseInfo.aid} and order_detail_id= '${baseInfo.order_detail_id}' and DATE(CONCAT(year,'-',month,'-01'))<='${baseInfo.year+'-'+baseInfo.month+'-01'}'`
         let moneyRefund = '0'
         await Promise.all([
             db.query(sql1),
@@ -131,6 +174,7 @@ async function moneyRefund(db, baseInfo) {
 
 
 module.exports = {
+    aim,
     users,
     serviceList,
     moneyRefund
