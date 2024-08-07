@@ -6,6 +6,7 @@ const moment = require('moment');
 const { Decimal } = require('decimal.js')
 const { betweenDates } = require('../common/time.js')
 const factorReal = require('./logic/factorReal.js')
+const { aim } = require('./logic/user.js')
 
 /**
  *  数据平台账号Xsearch 历史数据迁移
@@ -26,18 +27,26 @@ let run = async function () {
     sdb = sdb.promise()
 
     try {
-        let move=await db.query(`select * from bill_move where is_erreo=0`)
-        move=move[0]
+        let move = await db.query(`select * from bill_move where is_erreo=0`)
+        move = move[0]
 
-        for(const item of move){
+        for (const item of move) {
+          let contract= await aim(db,item.aid)
+          
+          for(const c of contract){
 
-            console.log(item);
+            console.log(c);
 
+          }
+          
 
+           
+
+           return
         }
 
-       
-        
+
+
 
 
     } catch (error) {
