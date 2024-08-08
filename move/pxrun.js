@@ -7,6 +7,9 @@ const { Decimal } = require('decimal.js')
 const { betweenDates } = require('../common/time.js')
 const factorReal = require('./logic/factorReal.js')
 const { aim } = require('./logic/user.js')
+const { xsearch } = require('./product/product.js')
+
+
 
 /**
  *  数据平台账号Xsearch 历史数据迁移
@@ -27,22 +30,29 @@ let run = async function () {
     sdb = sdb.promise()
 
     try {
-        let move = await db.query(`select * from bill_move where is_erreo=0`)
-        move = move[0]
+        let users = await db.query(`select * from bill_move where is_erreo=0`)
+        users = users[0]
 
-        for (const item of move) {
-          let contract= await aim(db,item.aid)
-          
-          for(const c of contract){
-
-            console.log(c);
-
-          }
-          
-
-           
-
-           return
+        for (const user of users) {
+            let contract = await aim(db, user.aid)
+            for (const c of contract) {
+                let timeArr = betweenDates(c.contract_start, c.contract_end, 'YYYYMMDD')
+                for (const time of timeArr) {
+                    let timestr = moment(time).format('YYYY-MM-DD')
+                    let userInfo={
+                        time:time,
+                        timestr:timestr,
+                        token:user.token,
+                        factor:c.factor,
+                        uid:user.aid,
+                        contract_id:c.contract_id
+                    }
+                   await xsearch(db,sdb,userInfo)
+                   return
+                }
+                return
+            }
+            return
         }
 
 
