@@ -4,7 +4,7 @@
     "description": "定时任务脚本 , 用来处理业务",
     "main": "sync-api-bill-record.js",
     "scripts": {
-        "move": "node ./move/pxrun.js -env prod",
+        "move": "node ./move/xrun.js -env prod",
         "move1": "node ./move/2.js -env prod",
         "billcreate": "node ./monthBillDev/run.js -env dev",
         "errorLog": "node ./errorLog/run.js",

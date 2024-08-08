@@ -6,9 +6,13 @@ const moment = require('moment');
 const { Decimal } = require('decimal.js')
 const { betweenDates } = require('../common/time.js')
 const factorReal = require('./logic/factorReal.js')
+const { dateAim } = require('./logic/user.js')
+const { xsearch,vsearch,dsearch,dvsearch,wsearch,fsearch} = require('./product/product.js')
+
+
 
 /**
- *  数据平台账号Xsearch 历史数据迁移
+ *  数据平台账号sys_interface_status_es历史数据迁移
  */
 let run = async function () {
 
@@ -26,46 +30,36 @@ let run = async function () {
     sdb = sdb.promise()
 
     try {
-        let suid = 2035942385436672
-        let uid = 9020686
-        let contract_id = 'SJXD2023122703'
-        let factor =new Decimal(new Decimal(10).pow(10)).mul('0.0018').toFixed()
-        let token = await sdb.query(`select * from sys_user_info where user_id=${suid}`)
-        token = token[0][0]?.token
+        let last =moment().subtract(1,'days').format('YYYY-MM-DD')
 
-        let timeArr = betweenDates('2024-06-31', '2024-08-06', 'YYYYMMDD')
-        for (const time of timeArr) {
-            let sql = `SELECT sum(total_amount) as total,info_flag FROM sys_interface_status_es where interface_name='/xsearch' and token='${token}' and ct ='${time}' and info_flag in ('0101','0105','0109','02','03','04','0411','06','07','11','17','21','1201','1202','1301','1302') GROUP BY info_flag`
-            let res = await sdb.query(sql)
-            let list = res[0]
-            if (list.length == 0) {
-                continue
+        let users = await db.query(`select * from bill_move where is_erreo=0 and aid=9020686 `) //and aid=9020686 
+        users = users[0]
+        for (const user of users) {
+            let contract = await dateAim(db, user.aid)
+
+            for (const c of contract) {
+                let timeArr = betweenDates(last, last, 'YYYYMMDD')
+                for (const time of timeArr) {
+                    let timestr = moment(time).format('YYYY-MM-DD')
+                    let userInfo={
+                        time:time,
+                        timestr:timestr,
+                        token:user.token,
+                        factor:c.factor,
+                        uid:user.aid,
+                        contract_id:c.contract_id
+                    }
+                    await Promise.all([
+                        xsearch(db,sdb,userInfo),
+                        vsearch(db,sdb,userInfo),
+                        dsearch(db,sdb,userInfo),
+                        dvsearch(db,sdb,userInfo),
+                        wsearch(db,sdb,userInfo),
+                        fsearch(db,sdb,userInfo),
+                    ])
+                }
+              console.log(`进度：${user.aid} ${c.contract_id} 时间范围：${c.contract_start} - ${c.contract_end}`);
             }
-            let sql2 = `SELECT sum(total_amount) as total,info_flag FROM sys_interface_status_es where interface_name='/xsearch' and token='${token}' and ct ='${time}' and info_flag in ('0101','0105','0109','02','03','04','0411','06','07','11','17','21','1201','1202','1301','1302')`
-            let res2 = await sdb.query(sql2)
-            let total = res2[0][0].total
-
-            let timestr = moment(time).format('YYYY-MM-DD')
-
-            for (const item of list) {
-                let number = new Decimal(item.total).mul(factor).toFixed()
-                let sql = `insert into info_flag_bill 
-                (stime,uid,contract_id,domain,flag,size,number)
-                values
-                ('${timestr}','${uid}','${contract_id}','xsearch','${item.info_flag}',${item.total},'${number}')
-                `
-                await db.query(sql)
-            }
-
-            let cnumber = new Decimal(total).mul(factor).toFixed()
-
-            let sqlS = `insert into bill_search 
-            (stime,uid,charge_deduct_number,charge_deduct_size,times,name,contract_id,text_size,charge_deduct_text_number)
-            values
-            ('${timestr}',${uid},${cnumber},${total},1,'xsearch','${contract_id}',${total},${cnumber})
-            `
-            await db.query(sqlS)
-            console.log(timestr);
         }
     } catch (error) {
         console.log(error);
