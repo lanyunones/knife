@@ -7,7 +7,7 @@ const { Decimal } = require('decimal.js')
 const { betweenDates } = require('../common/time.js')
 const factorReal = require('./logic/factorReal.js')
 const { aim } = require('./logic/user.js')
-const { xsearch } = require('./product/product.js')
+const { xsearch,vsearch,dsearch,dvsearch,wsearch,fsearch} = require('./product/product.js')
 
 
 
@@ -46,14 +46,18 @@ let run = async function () {
                         uid:user.aid,
                         contract_id:c.contract_id
                     }
-                   await xsearch(db,sdb,userInfo)
-                   return
+                    await Promise.all([
+                        xsearch(db,sdb,userInfo),
+                        vsearch(db,sdb,userInfo),
+                        dsearch(db,sdb,userInfo),
+                        dvsearch(db,sdb,userInfo),
+                        wsearch(db,sdb,userInfo),
+                        fsearch(db,sdb,userInfo),
+                    ])
                 }
-                return
+              console.log(`进度：${user.aid} ${c.contract_id}`);
             }
-            return
         }
-
     } catch (error) {
         console.log(error);
     } finally {
