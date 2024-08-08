@@ -12,7 +12,7 @@ const { xsearch } = require('./product/product.js')
 
 
 /**
- *  数据平台账号Xsearch 历史数据迁移
+ *  数据平台账号sys_interface_status_es历史数据迁移
  */
 let run = async function () {
 
@@ -32,7 +32,6 @@ let run = async function () {
     try {
         let users = await db.query(`select * from bill_move where is_erreo=0`)
         users = users[0]
-
         for (const user of users) {
             let contract = await aim(db, user.aid)
             for (const c of contract) {
@@ -54,10 +53,6 @@ let run = async function () {
             }
             return
         }
-
-
-
-
 
     } catch (error) {
         console.log(error);
