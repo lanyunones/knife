@@ -30,7 +30,7 @@ let run = async function () {
     sdb = sdb.promise()
 
     try {
-        let users = await db.query(`select * from bill_move where is_erreo=0`)
+        let users = await db.query(`select * from bill_move where is_erreo=0`) //and aid=9020686 
         users = users[0]
         for (const user of users) {
             let contract = await aim(db, user.aid)
@@ -55,7 +55,7 @@ let run = async function () {
                         fsearch(db,sdb,userInfo),
                     ])
                 }
-              console.log(`进度：${user.aid} ${c.contract_id}`);
+              console.log(`进度：${user.aid} ${c.contract_id} 时间范围：${c.contract_start} - ${c.contract_end}`);
             }
         }
     } catch (error) {

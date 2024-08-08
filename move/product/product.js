@@ -33,7 +33,8 @@ async function xsearch(db, sdb, userInfo) {
     }
 
     let cnumber = new Decimal(total).mul(userInfo.factor).toFixed()
-
+  
+    
     let sql3 = `select id from bill_search where uid=${userInfo.uid} and contract_id='${userInfo.contract_id}' and stime='${userInfo.timestr}' and name='xsearch'`
     let res3 = await db.query(sql3)
     res3 = res3[0]
@@ -103,8 +104,6 @@ async function vsearch(db, sdb, userInfo) {
 }
 
 async function dsearch(db, sdb, userInfo) {
-    userInfo.factor = '0'
-
     let sql = `SELECT sum(total_amount) as total,info_flag FROM sys_interface_status_es where interface_name='/dsearch' and token='${userInfo.token}' and ct ='${userInfo.time}' and info_flag in ('0101','0105','0109','02','03','04','0411','06','07','11','17','21','1201','1202','1301','1302') GROUP BY info_flag`
     let res = await sdb.query(sql)
     let list = res[0]
@@ -116,7 +115,7 @@ async function dsearch(db, sdb, userInfo) {
     let total = res2[0][0].total
 
     for (const item of list) {
-        let number = new Decimal(item.total).mul(userInfo.factor).toFixed()
+        let number = new Decimal(item.total).mul('0').toFixed()
         let sqls = `select id from info_flag_bill where uid=${userInfo.uid} and contract_id='${userInfo.contract_id}' and domain='dsearch' and stime='${userInfo.timestr}' and flag='${item.info_flag}'`
         let count = await db.query(sqls)
         count = count[0]
@@ -155,7 +154,6 @@ async function dsearch(db, sdb, userInfo) {
 }
 
 async function dvsearch(db, sdb, userInfo) {
-    userInfo.factor = '0'
     let sql = `SELECT sum(total_amount) as total,info_flag FROM sys_interface_status_es where interface_name='/dvsearch' and token='${userInfo.token}' and ct ='${userInfo.time}' and info_flag in ('0101','0105','0109','02','03','04','0411','06','07','11','17','21','1201','1202','1301','1302') GROUP BY info_flag`
     let res = await sdb.query(sql)
     let list = res[0]
@@ -167,7 +165,7 @@ async function dvsearch(db, sdb, userInfo) {
     let total = res2[0][0].total
 
     for (const item of list) {
-        let number = new Decimal(item.total).mul(userInfo.factor).toFixed()
+        let number = new Decimal(item.total).mul('0').toFixed()
         let sqls = `select id from info_flag_bill where uid=${userInfo.uid} and contract_id='${userInfo.contract_id}' and domain='dvsearch' and stime='${userInfo.timestr}' and flag='${item.info_flag}'`
         let count = await db.query(sqls)
         count = count[0]
@@ -186,7 +184,7 @@ async function dvsearch(db, sdb, userInfo) {
         await db.query(sqlinsert)
     }
 
-    let cnumber = new Decimal(total).mul(userInfo.factor).toFixed()
+    let cnumber = new Decimal(total).mul('0').toFixed()
     let sql3 = `select id from bill_search where uid=${userInfo.uid} and contract_id='${userInfo.contract_id}' and stime='${userInfo.timestr}' and name='dvsearch'`
     let res3 = await db.query(sql3)
     res3 = res3[0]
