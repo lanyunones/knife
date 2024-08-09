@@ -32,7 +32,7 @@ let run = async function () {
     try {
         let last =moment().subtract(1,'days').format('YYYY-MM-DD')
 
-        let users = await db.query(`select * from bill_move where is_erreo=0 and aid=9020686 `) //and aid=9020686 
+        let users = await db.query(`select * from bill_move where is_erreo=0`) //and aid=9020686 
         users = users[0]
         for (const user of users) {
             let contract = await dateAim(db, user.aid)
